@@ -1,0 +1,117 @@
+/* ============================================================
+   INSP3 Contact Burst & Concentric HUD Ripple Styles
+   Direct translation of insp3.mp4 contact burst & orbiting HUD
+   ============================================================ */
+
+.insp3-burst-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.insp3-instance {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* 1. Core Glowing Orb Flash */
+.insp3-core-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 20px 6px #B6FF3B, 0 0 40px 14px rgba(182, 255, 59, 0.6);
+  animation: insp3-core-pop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes insp3-core-pop {
+  0% { transform: scale(0.2); opacity: 1; }
+  50% { transform: scale(2.2); opacity: 0.9; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* 2. Rapid Shockwave Contact Ring */
+.insp3-shockwave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  margin-left: -15px;
+  border-radius: 50%;
+  border: 2px solid #B6FF3B;
+  box-shadow: 0 0 12px rgba(182, 255, 59, 0.8);
+  animation: insp3-shockwave-expand 0.55s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes insp3-shockwave-expand {
+  0% { transform: scale(0.4); opacity: 1; border-width: 3px; }
+  100% { transform: scale(3.8); opacity: 0; border-width: 0.5px; }
+}
+
+/* 3. Concentric HUD Ring (Outer with Ticks) */
+.insp3-hud-ring--outer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68px;
+  height: 68px;
+  margin-top: -34px;
+  margin-left: -34px;
+  border-radius: 50%;
+  border: 1px dashed rgba(182, 255, 59, 0.7);
+  box-shadow: 0 0 8px rgba(182, 255, 59, 0.3);
+  animation: insp3-hud-spin-out 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes insp3-hud-spin-out {
+  0% { transform: scale(0.3) rotate(0deg); opacity: 0; }
+  25% { opacity: 0.95; }
+  100% { transform: scale(2.2) rotate(140deg); opacity: 0; }
+}
+
+/* 4. Concentric HUD Ring (Inner Precision Dotted) */
+.insp3-hud-ring--inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  margin-left: -22px;
+  border-radius: 50%;
+  border: 1px dotted rgba(232, 234, 229, 0.85);
+  animation: insp3-hud-spin-in 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes insp3-hud-spin-in {
+  0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: scale(1.6) rotate(-180deg); opacity: 0; }
+}
+
+/* 5. Radial Sparks */
+.insp3-spark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #B6FF3B;
+  box-shadow: 0 0 6px #B6FF3B;
+  animation: insp3-spark-fly 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes insp3-spark-fly {
+  0% { transform: translate(0, 0) scale(1.5); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.2); opacity: 0; }
+}

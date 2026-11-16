@@ -1,0 +1,258 @@
+/* ============================================================
+   Layout — header, nav, mobile menu, footer
+   ============================================================ */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--id-z-nav);
+  transition: background-color var(--id-dur-base) var(--id-ease-portal),
+    border-color var(--id-dur-base) var(--id-ease-portal), backdrop-filter var(--id-dur-base) var(--id-ease-portal);
+  border-bottom: 1px solid transparent;
+}
+
+.site-header.is-scrolled {
+  background: var(--id-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--id-line-soft);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4.25rem;
+  padding-inline: var(--gutter);
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.site-nav__mark {
+  display: inline-flex;
+  align-items: center;
+  color: var(--id-ink-0);
+  line-height: 1;
+  transition: opacity var(--id-dur-base) var(--id-ease-portal);
+}
+
+.site-nav__mark:hover {
+  opacity: 0.8;
+}
+
+.site-nav__mark-svg {
+  display: block;
+  width: 44px;
+  height: 20px;
+  overflow: visible;
+}
+
+.site-nav__mark-g,
+.site-nav__mark-w {
+  fill: none;
+  stroke: var(--id-ink-0);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.site-nav__mark-dot {
+  fill: var(--id-accent);
+  opacity: 0;
+  transition: opacity var(--id-dur-fast) var(--id-ease-portal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav__mark-dot {
+    opacity: 1 !important;
+  }
+}
+
+.site-nav__links {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.site-nav__link {
+  position: relative;
+  font-family: var(--id-font-body);
+  font-size: var(--id-text-label-size);
+  font-weight: var(--id-text-label-weight);
+  letter-spacing: var(--id-text-label-track);
+  text-transform: uppercase;
+  color: var(--id-ink-1);
+  padding-block: 0.35rem;
+  transition: color var(--id-dur-base) var(--id-ease-portal), opacity var(--id-dur-base) var(--id-ease-portal);
+}
+
+.site-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--id-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--id-dur-base) var(--id-ease-portal);
+}
+
+.site-nav__link:hover,
+.site-nav__link.is-active {
+  color: var(--id-ink-0);
+}
+
+.site-nav__link:hover::after,
+.site-nav__link.is-active::after {
+  transform: scaleX(1);
+}
+
+/* ---- mobile menu toggle ---- */
+
+.site-nav__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--id-r-sm);
+}
+
+.site-nav__toggle-bar {
+  width: 1.25rem;
+  height: 1.5px;
+  background: var(--id-ink-0);
+  transition: transform var(--id-dur-base) var(--id-ease-portal), background-color var(--id-dur-base) var(--id-ease-portal);
+}
+
+.site-nav__toggle[aria-expanded='true'] .site-nav__toggle-bar:nth-child(2) {
+  transform: translateY(3.5px) rotate(45deg);
+}
+
+.site-nav__toggle[aria-expanded='true'] .site-nav__toggle-bar:nth-child(3) {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+
+/* ---- mobile menu overlay ---- */
+
+/*
+ * Overlay sits above the nav (--z-overlay > --z-nav). Its top strip
+ * (the header height) stays transparent so the header mark and the
+ * menu toggle remain visible and clickable while the menu is open;
+ * pointer-events stay on the menu links only.
+ */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--id-z-overlay);
+  padding: 4.25rem var(--id-gutter) var(--id-gutter);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to bottom, transparent 4.25rem, var(--id-bg-0) 4.25rem);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--id-dur-base) var(--id-ease-portal), visibility var(--id-dur-base) var(--id-ease-portal);
+}
+
+.mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--id-space-2);
+  pointer-events: auto;
+}
+
+.mobile-menu a {
+  font-family: var(--id-font-display);
+  font-size: clamp(2rem, 10vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.25;
+  padding-block: 0.4rem;
+  color: var(--id-ink-0);
+  transition: color var(--id-dur-base) var(--id-ease-portal), transform var(--id-dur-base) var(--id-ease-portal),
+    opacity var(--id-dur-base) var(--id-ease-portal);
+}
+
+.mobile-menu a:hover {
+  color: var(--id-accent);
+  opacity: 1;
+  transform: translateX(var(--id-space-3));
+}
+
+.mobile-menu a:active {
+  opacity: 0.5;
+}
+
+/* ---- footer — base layout (contact.css owns the full visual treatment) ---- */
+
+.site-footer {
+  border-top: 1px solid var(--line-soft);
+  padding-block: 1.8rem;
+  padding-inline: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.site-footer__meta {
+  font-family: var(--font-body);
+  font-size: var(--text-meta-size);
+  font-weight: var(--text-meta-weight);
+  letter-spacing: var(--text-meta-track);
+  text-transform: uppercase;
+  color: var(--ink-2);
+  opacity: 0.5;
+  text-align: center;
+}
+
+.site-footer__meta--muted {
+  opacity: 0.25;
+}
+
+.site-footer__sig {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--ink-0);
+  opacity: 0.1;
+  margin-bottom: 0.5rem;
+}
+
+/* ---- responsive ---- */
+
+@media (max-width: 720px) {
+  .site-nav__links {
+    display: none;
+  }
+
+  .site-nav__toggle {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-nav__mark,
+  .site-nav__link,
+  .site-nav__link::after,
+  .mobile-menu,
+  .mobile-menu a,
+  .site-nav__toggle-bar {
+    transition: none !important;
+    animation: none !important;
+  }
+}

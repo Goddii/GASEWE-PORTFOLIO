@@ -1,0 +1,706 @@
+/* ============================================================
+   Work — data-driven project list
+   ============================================================ */
+
+.work {
+  padding-block: var(--section-gap);
+}
+
+.section-head {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  margin-bottom: clamp(3rem, 7vh, 5rem);
+}
+
+.section-head__title {
+  color: var(--ink-0);
+  margin: 0;
+}
+
+/* S3: Section title underline that draws on enter (insp8) */
+.section-head__title-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.section-head__line {
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.section-head__path {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.section-head__note {
+  max-width: 34ch;
+  color: var(--ink-1);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-line);
+}
+
+/* ---- project cards ---- */
+
+.project-list {
+  counter-reset: project;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.project {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 4vw, 3rem);
+  align-items: center;
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding: 24px;
+  background: var(--bg-1);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-md);
+}
+
+.project--flip .project__media {
+  order: 2;
+}
+
+/* the featured build gets the strongest treatment: full-width, stacked */
+.project--featured {
+  grid-template-columns: 1fr;
+  padding: clamp(20px, 3vw, 32px);
+}
+
+.project__signal-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.project__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-meta-size);
+  font-weight: var(--text-meta-weight);
+  letter-spacing: var(--text-meta-track);
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin-top: -0.4rem;
+}
+
+/* ---- media frame ---- */
+
+.project__media {
+  position: relative;
+  display: block;
+  border-radius: var(--r-md);
+  overflow: clip;
+  aspect-ratio: 16 / 10;
+  background: var(--bg-2);
+  isolation: isolate;
+}
+
+.project__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line-soft);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.project__img-wrap {
+  position: absolute;
+  inset: -12%;
+  z-index: 1;
+}
+
+.project__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.project__frame-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 4px 12px;
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-pill);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-1);
+  transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+}
+
+.project__frame-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-0);
+}
+
+.project__media:hover .project__frame-badge {
+  color: var(--ink-0);
+  border-color: var(--line-strong);
+}
+
+/* ---- media fallback: no screenshot exists (backend-only project) ---- */
+
+.project__media--api {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--bg-2),
+    var(--bg-2) 1px,
+    var(--bg-1) 1px,
+    var(--bg-1) 34px
+  );
+}
+
+.project__frame-badge--api {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.project__frame-badge--api::before {
+  background: var(--ink-1);
+}
+
+.project__api-glyph {
+  font-family: var(--font-body);
+  font-size: 3.5rem;
+  font-weight: 200;
+  color: var(--line-strong);
+}
+
+.project__api-methods {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.project__api-methods li {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--ink-1);
+}
+
+/* ---- featured media: technology / architecture / product ---- */
+
+.project__media--featured {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 16 / 8;
+}
+
+.project__tabs {
+  display: flex;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.project__tab {
+  flex: 1 1 0;
+  padding-block: 0.85rem;
+  font-family: var(--font-body);
+  font-size: var(--text-meta-size);
+  font-weight: var(--text-meta-weight);
+  letter-spacing: var(--text-meta-track);
+  text-transform: uppercase;
+  color: var(--ink-1);
+  border-bottom: 2px solid transparent;
+  transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+}
+
+.project__tab:hover {
+  color: var(--ink-0);
+}
+
+.project__tab.is-active {
+  color: var(--ink-0);
+  border-bottom-color: var(--ink-0);
+}
+
+.project__panel {
+  position: relative;
+  display: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.project__panel.is-active {
+  display: flex;
+}
+
+.project__tab-stack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem 1.4rem;
+}
+
+.project__tab-stack li {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+  font-weight: 300;
+  color: var(--ink-0);
+}
+
+.project__flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  max-width: 44rem;
+}
+
+.project__flow-step {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.04em;
+  color: var(--ink-0);
+  white-space: nowrap;
+}
+
+.project__flow-arrow {
+  color: var(--ink-2);
+  font-size: 1rem;
+}
+
+.project__tab-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.project__tab-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project__panel[data-panel='product'] {
+  padding: 0;
+}
+
+/* ---- project body ---- */
+
+.project__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.project__index {
+  font-family: var(--font-body);
+  font-size: var(--text-meta-size);
+  font-weight: var(--text-meta-weight);
+  letter-spacing: var(--text-meta-track);
+  color: var(--ink-1);
+}
+
+.project__index::before {
+  counter-increment: project;
+  content: '0' counter(project);
+}
+
+.project__name {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.25;
+  color: var(--ink-0);
+}
+
+.project__tagline {
+  font-family: var(--font-display);
+  font-size: var(--text-body-size);
+  font-weight: 300;
+  line-height: var(--text-body-line);
+  color: var(--ink-1);
+}
+
+.project__meta {
+  font-family: var(--font-body);
+  font-size: var(--text-meta-size);
+  font-weight: var(--text-meta-weight);
+  letter-spacing: var(--text-meta-track);
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.project__desc {
+  color: var(--ink-1);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-line);
+  max-width: 52ch;
+}
+
+.project__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: 0.35rem;
+}
+
+.project__stack-item {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--ink-1);
+  background: transparent;
+  transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+
+.project__stack-item:hover {
+  border-color: var(--ink-0);
+  color: var(--ink-0);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- project links ---- */
+
+.project__links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.8rem;
+  margin-top: 0.4rem;
+}
+
+/* primary action — pill button */
+.project__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-body-size);
+  line-height: 1.3;
+  color: var(--ink-0);
+  background: transparent;
+  transition: background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out),
+    opacity var(--dur) var(--ease-out);
+}
+
+.project__link:hover {
+  background: var(--ink-0);
+  color: var(--bg-0);
+  border-color: var(--ink-0);
+}
+
+.project__link:active {
+  opacity: 0.5;
+}
+
+.project__link-arrow {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.project__link:hover .project__link-arrow {
+  transform: translate(3px, -3px);
+}
+
+/* secondary action — quiet text link */
+.project__link--ghost {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ink-1);
+  font-size: var(--text-meta-size);
+  font-weight: var(--text-meta-weight);
+  letter-spacing: var(--text-meta-track);
+  text-transform: uppercase;
+}
+
+.project__link--ghost:hover {
+  background: none;
+  border: 0;
+  color: var(--ink-0);
+  opacity: 1;
+}
+
+.project__link--ghost:active {
+  opacity: 0.5;
+}
+
+/* ---- responsive ---- */
+
+@media (max-width: 900px) {
+  .project,
+  .project--flip {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .project--flip .project__media {
+    order: 0;
+  }
+}
+
+/* ============================================================
+   Phase 3 — Work: Scan, Annotate, Glitch
+   ============================================================ */
+
+/* ---- Hologram rest state & blur-up (ftbl1/insp1) ---- */
+.project__img,
+.project__tab-image img {
+  filter: grayscale(var(--holo-grayscale, 0)) contrast(var(--holo-contrast, 1)) blur(var(--holo-blur, 0px));
+  transition: filter var(--dur-slow) var(--ease-out);
+  will-change: filter;
+}
+
+/* Hologram rest state is applied via JS when media-scan initializes */
+
+/* ---- Scanline overlay ---- */
+.project__scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* ---- Annotation callouts (insp2) ---- */
+.project__annotation-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.project__annotation-line {
+  fill: none;
+  stroke: var(--glow);
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+
+.project__annotation-dot {
+  fill: var(--glow);
+  opacity: 0.9;
+}
+
+.project__annotation-label {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-0);
+  background: var(--bg-0);
+  border: 1px solid var(--glow);
+  border-radius: var(--r-pill);
+  padding: 4px 10px 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--bg-1);
+}
+
+.project__annotation-id {
+  color: var(--glow);
+  font-family: var(--font-body);
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.08em;
+}
+
+.project__annotation-text {
+  color: var(--ink-0);
+}
+
+/* Static captions for touch/narrow viewports */
+.project__annotation-captions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.project__annotation-caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-1);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---- Slice glitch (insp2) ---- */
+/* Slice elements created dynamically by media-scan.js */
+
+/* ---- White beat (insp4) ---- */
+.project__white-beat {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0));
+  opacity: 0;
+  pointer-events: none;
+  z-index: 7;
+}
+
+/* ---- Tag springs ---- */
+.project__stack-item {
+  will-change: transform, border-color, background-color, color;
+}
+
+/* Press/hover spring handled by media-scan.js via motion press/hover */
+
+/* ---- Featured panel swap motion ---- */
+.project__panel {
+  will-change: opacity, transform;
+}
+
+/* ---- Project entrance choreography ---- */
+[data-project] .project__index,
+[data-project] .project__eyebrow,
+[data-project] .project__media,
+[data-project] .project__name,
+[data-project] .project__tagline,
+[data-project] .project__meta,
+[data-project] .project__desc,
+[data-project] .project__stack-item,
+[data-project] .project__link,
+[data-project] .project__link--ghost {
+  opacity: 0;
+}
+
+/* These are animated in by initProjectEntrances() */
+
+/* ---- Responsive adjustments for Phase 3 ---- */
+@media (max-width: 900px) {
+  .project__annotation-label {
+    font-size: 0.62rem;
+    padding: 3px 8px 3px 10px;
+  }
+
+  .project__annotation-captions {
+    gap: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project__img,
+  .project__tab-image img {
+    filter: none !important;
+    transition: none !important;
+  }
+
+  .project__scanline {
+    display: none !important;
+  }
+
+  .project__annotation-line {
+    stroke-opacity: 0.3 !important;
+    transition: none !important;
+  }
+
+  .project__annotation-dot,
+  .project__annotation-label {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .project__panel {
+    transition: none !important;
+  }
+
+  .project__stack-item {
+    transition: none !important;
+  }
+
+  [data-project] .project__index,
+  [data-project] .project__eyebrow,
+  [data-project] .project__media,
+  [data-project] .project__name,
+  [data-project] .project__tagline,
+  [data-project] .project__meta,
+  [data-project] .project__desc,
+  [data-project] .project__stack-item,
+  [data-project] .project__link,
+  [data-project] .project__link--ghost {
+    opacity: 1 !important;
+  }
+
+  .project__white-beat {
+    display: none !important;
+  }
+}
+
+/* Card media for projects with no screenshot yet: the project's own system sketch */
+.project__media--sketch { padding: 8%; background: var(--bg-1); }
+.project__media--sketch .flow-sketch { position: relative; z-index: 1; }

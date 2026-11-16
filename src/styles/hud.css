@@ -1,0 +1,334 @@
+/* ============================================================
+   HUD — the scanning instrument around the hero canvas.
+
+   Inspiration 1: a specimen rotating inside a framed panel —
+   corner brackets, mono readouts, a tick scale, a horizontal
+   scan sweep and a waveform strip along the foot.
+   Inspiration 2: a wireframe cage with numeric callouts.
+   Inspiration ds: glow in the dark, plus the odd electric arc.
+
+   Everything in this file is decorative and aria-hidden. The
+   hero must read completely with all of it stripped away.
+   ============================================================ */
+
+.hero__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Canvas lives inside the frame and fills it exactly. It is a replaced
+   element, so left/right insets alone would NOT stretch it — it needs
+   width/height 100% against a sized parent (the frame). The buffer is the
+   visible area: no wasted GPU fill. */
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out);
+}
+
+.hero__stage.is-live .hero__canvas {
+  opacity: 1;
+}
+
+.hero__stage.is-nogl .hero__canvas {
+  display: none;
+}
+
+/* ---- the frame: brackets, readout, ticks, rail ---- */
+
+/* The panel holds the left column on desktop: the stat rail owns the right,
+   so the instrument never fights it for the same corner. */
+.hero__frame {
+  position: absolute;
+  top: clamp(5rem, 12vh, 8rem);
+  right: 46%;
+  bottom: clamp(19rem, 46vh, 27rem);
+  left: var(--gutter);
+}
+
+.hud__bracket {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+}
+
+.hud__bracket i {
+  position: absolute;
+  display: block;
+  background: var(--line-strong);
+}
+
+/* the two arms of a bracket; both start collapsed and draw outward */
+.hud__bracket i:first-child {
+  width: 100%;
+  height: 1px;
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.hud__bracket i:last-child {
+  width: 1px;
+  height: 100%;
+  transform: scaleY(1);
+  transform-origin: top center;
+}
+
+.hud__bracket--tl {
+  top: 0;
+  left: 0;
+}
+
+.hud__bracket--tr {
+  top: 0;
+  right: 0;
+}
+
+.hud__bracket--tr i:first-child,
+.hud__bracket--br i:first-child {
+  transform-origin: right center;
+}
+
+.hud__bracket--bl,
+.hud__bracket--br {
+  bottom: 0;
+}
+
+.hud__bracket--bl i:last-child,
+.hud__bracket--br i:last-child {
+  transform-origin: bottom center;
+}
+
+/* ---- readout block: real numbers, top-left ---- */
+
+.hud__readout {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  display: grid;
+  gap: 0.3rem;
+  max-width: 18rem;
+}
+
+.hud__readout-row {
+  display: flex;
+  gap: 0.55rem;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.hud__readout-key {
+  color: var(--ink-2);
+  opacity: 0.6;
+}
+
+.hud__readout-value {
+  color: var(--ink-1);
+}
+
+/* ---- tick scale, right edge: fills with scroll progress ---- */
+
+.hud__ticks {
+  position: absolute;
+  top: 12%;
+  right: 0.9rem;
+  bottom: 22%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.hud__tick {
+  display: block;
+  width: 9px;
+  height: 1px;
+  background: var(--line);
+  transition: background-color var(--dur-base) var(--ease-out),
+    width var(--dur-base) var(--ease-out);
+}
+
+.hud__tick.is-on {
+  width: 15px;
+  background: var(--glow);
+  box-shadow: 0 0 6px var(--glow-soft);
+}
+
+/* ---- state: the lamp (insp ds — a glow that just keeps breathing) ---- */
+
+.hud__state {
+  position: absolute;
+  top: 0.9rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.hud__live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--glow);
+  box-shadow: 0 0 8px var(--glow-soft);
+  animation: hud-breathe 4s var(--ease-out) infinite;
+}
+
+@keyframes hud-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* ---- foot rail: waveform strip driven by scroll velocity ---- */
+
+.hud__rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  padding-inline: 0.9rem;
+}
+
+.hud__wave {
+  flex: 1;
+  height: 44px;
+  overflow: visible;
+}
+
+.hud__wave-path {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.hud__rail-label {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: var(--text-meta-weight);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+/* ---- ignite: light before form (insp op) ----
+   A single lamp lit in the dark, just above where the name lands. The
+   entrance choreography ramps it up, then lets it settle as ambient
+   light behind the type. */
+
+.hero__ignite {
+  position: absolute;
+  left: var(--gutter);
+  bottom: clamp(15rem, 37vh, 22rem);
+  width: min(30rem, 70vw);
+  height: 10rem;
+  margin: 0;
+  background: radial-gradient(closest-side, var(--glow-soft), rgba(200, 245, 66, 0.06) 55%, transparent 78%);
+  filter: blur(26px);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+html.no-js .hero__ignite {
+  opacity: 0.22;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .hero__ignite {
+    opacity: 0.22;
+  }
+
+  .hud__live-dot {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
+/* ---- electric arc (insp ds): a rare filament flicker in the dark ---- */
+
+.hero__arc {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 90ms linear;
+}
+
+.hero__arc.is-on {
+  opacity: 0.5;
+}
+
+.hero__arc-path {
+  fill: none;
+  stroke: var(--glow);
+  stroke-width: 0.12;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 4px var(--glow-soft));
+}
+
+/* ---- responsive ---- */
+
+@media (max-width: 900px) {
+  .hud__readout-row {
+    font-size: 0.58rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero__frame {
+    right: 40%;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero__canvas {
+    opacity: 0;
+  }
+
+  .hero__stage.is-live .hero__canvas {
+    opacity: 0.42;
+  }
+
+  .hero__frame {
+    right: var(--gutter);
+    bottom: 56vh;
+  }
+
+  /* readout, ticks, rail label and the waveform rail all lose to the type
+     here: the instrument becomes a quiet backdrop of brackets + points */
+  .hud__readout,
+  .hud__ticks,
+  .hud__rail {
+    display: none;
+  }
+
+  .hud__state {
+    right: 0.9rem;
+  }
+}

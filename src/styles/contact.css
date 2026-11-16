@@ -1,0 +1,449 @@
+/* ============================================================
+   Contact — Phase 8: Cinematic Closing Scene
+   The particle canvas echoes the hero's opening; the kinetic
+   headline, light-trail underline, and emerging links create
+   a convergence moment that mirrors the section's identity.
+   ============================================================ */
+
+.contact {
+  position: relative;
+  padding-block: calc(var(--section-gap) * 1.5) calc(var(--section-gap) * 1.2);
+  border-top: 1px solid var(--line-soft);
+  overflow: clip;
+  isolation: isolate;
+}
+
+/* ---- Particle convergence canvas (mirrors hero opening) ---- */
+.contact__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.contact__canvas.is-active {
+  opacity: 1;
+}
+
+/* ---- Ambient accent glow that collapses as footer approaches ---- */
+.contact__glow {
+  position: absolute;
+  top: -6%;
+  left: -4%;
+  width: min(52rem, 90vw);
+  height: 24rem;
+  background: radial-gradient(
+    ellipse 70% 60% at 30% 40%,
+    rgba(0, 240, 255, 0.07) 0%,
+    rgba(0, 240, 255, 0.03) 40%,
+    transparent 72%
+  );
+  filter: blur(55px);
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+  transform-origin: center;
+  will-change: opacity, transform, filter;
+}
+
+/* ---- Inner layout ---- */
+.contact__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* ---- HUD status row ---- */
+.contact__hud-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2.4rem;
+}
+
+.contact__hud-label {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2, #777D78);
+  opacity: 0.6;
+}
+
+.contact__hud-sep {
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--line-soft);
+  opacity: 0.4;
+}
+
+.contact__hud-status {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--glow, #00f0ff);
+  animation: status-blink 2.8s ease-in-out infinite;
+}
+
+@keyframes status-blink {
+  0%, 90%, 100% { opacity: 1; }
+  45% { opacity: 0.3; }
+}
+
+/* ---- Cinematic closing headline ---- */
+.contact__headline-wrap {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.contact__title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(2.8rem, 8vw, 6.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  color: var(--ink-0, #E8EAE5);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.08em;
+}
+
+.contact__title-line {
+  display: block;
+  overflow: hidden;
+  /* each line clips its own reveal */
+}
+
+.contact__title-line-inner {
+  display: block;
+  /* JS wraps text in this for the translate-up reveal */
+  will-change: transform, opacity;
+}
+
+/* Light-trail underline SVG */
+.contact__trail-svg {
+  display: block;
+  width: min(100%, 680px);
+  height: 2px;
+  margin-top: 1.1rem;
+  overflow: visible;
+}
+
+.contact__trail-path {
+  fill: none;
+  stroke: var(--glow, #00f0ff);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+  /* drawn via JS pathLength animation */
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.6));
+}
+
+/* ---- Sub-line lede ---- */
+.contact__lede {
+  margin-top: 1.6rem;
+  color: var(--ink-1, #777D78);
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 46ch;
+  will-change: opacity, transform;
+}
+
+/* ---- Contact links ---- */
+.contact__links {
+  margin-top: 3.2rem;
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* S3: SVG rule line that draws left→right */
+.contact__rule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.contact__rule-path {
+  fill: none;
+  stroke: var(--line-soft);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transition: stroke 0.25s ease, filter 0.25s ease;
+}
+
+.contact__item:hover .contact__rule-path,
+.contact__item:focus-within .contact__rule-path {
+  stroke: var(--glow, #00f0ff);
+  filter: drop-shadow(0 0 3px rgba(0, 240, 255, 0.5));
+}
+
+.contact__link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.35rem;
+  transition: opacity 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.contact__link-label {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: var(--text-meta-size, 0.72rem);
+  font-weight: var(--text-meta-weight, 500);
+  letter-spacing: var(--text-meta-track, 0.1em);
+  text-transform: uppercase;
+  color: var(--ink-1, #777D78);
+  transition: color 0.2s ease;
+}
+
+.contact__link-value {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ink-0, #E8EAE5);
+  transition: color 0.2s ease;
+  will-change: transform;
+}
+
+.contact__item:hover .contact__link-label,
+.contact__item:focus-within .contact__link-label {
+  color: var(--ink-0, #E8EAE5);
+}
+
+.contact__item:hover .contact__link-value,
+.contact__item:focus-within .contact__link-value {
+  color: var(--glow, #00f0ff);
+}
+
+.contact__link:active {
+  opacity: 0.5;
+}
+
+.contact__link:focus-visible {
+  outline: 2px solid var(--glow, #00f0ff);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ---- Closing identity echo ---- */
+.contact__closing {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.4s;
+}
+
+.contact__closing.is-visible {
+  opacity: 1;
+}
+
+.contact__closing-mono {
+  font-family: var(--font-mono, 'Space Grotesk', monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2, #777D78);
+  opacity: 0.45;
+}
+
+.contact__closing-mono--dim {
+  opacity: 0.2;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 720px) {
+  .contact__title {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+  }
+
+  .contact__link {
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-block: 1.1rem;
+  }
+
+  .contact__hud-row {
+    display: none;
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .contact__glow,
+  .contact__canvas {
+    display: none !important;
+  }
+
+  .contact__trail-path {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+
+  .contact__title,
+  .contact__title-line,
+  .contact__lede,
+  .contact__link {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .contact__link-value {
+    transform: none !important;
+  }
+
+  .contact__closing {
+    opacity: 1 !important;
+  }
+
+  .contact__hud-status {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   HIGH-IMPACT TRANSMISSION GRID & CV DOWNLOAD
+   ============================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 1.8rem);
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-card {
+  background: rgba(6, 9, 14, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 12px;
+  padding: clamp(1.4rem, 2.5vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.2rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.contact-card:hover {
+  border-color: rgba(0, 240, 255, 0.55);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+.contact-card:hover::before {
+  opacity: 1;
+}
+
+.contact-card--primary {
+  border-color: rgba(0, 240, 255, 0.4);
+  background: radial-gradient(circle at 10% 10%, rgba(0, 240, 255, 0.08) 0%, rgba(6, 9, 14, 0.85) 70%);
+}
+
+.contact-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.contact-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: #00f0ff;
+}
+
+.contact-card__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00f0ff;
+  box-shadow: 0 0 8px #00f0ff;
+}
+
+.contact-card__tag {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: #8b949e;
+}
+
+.contact-card__title {
+  font-family: var(--id-font-display, sans-serif);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-weight: 600;
+  color: #f0f6fc;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.contact-card__desc {
+  font-family: var(--id-font-body, sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #9da7b3;
+  margin: 0;
+}
+
+.contact-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}

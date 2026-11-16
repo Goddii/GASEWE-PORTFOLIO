@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-08T00:00:00.000Z",
+  "title": "Design System: Godwin — Full-stack Developer Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "near-black": { "role": "neutral", "displayName": "Near-Black", "canonical": "#0a0c08", "tonalRamp": ["#05060a", "#07080b", "#0a0c08", "#0d0f0a", "#10130d", "#141810", "#191d13", "#1e2317"] },
+      "raised-surface": { "role": "neutral", "displayName": "Raised Surface", "canonical": "#0f120c", "tonalRamp": ["#070907", "#0a0d09", "#0f120c", "#13160f", "#171a12", "#1b1f16", "#1f2419", "#23281c"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#eef1e6", "tonalRamp": ["#3c3f35", "#55584c", "#6e7163", "#878a7a", "#a0a491", "#b9bda8", "#d3d7c7", "#eef1e6"] },
+      "ink-soft": { "role": "neutral", "displayName": "Ink Soft", "canonical": "#c2c9b4", "tonalRamp": ["#33382e", "#484d41", "#5d6353", "#727866", "#888e7a", "#9da38d", "#afb6a0", "#c2c9b4"] },
+      "ink-muted": { "role": "neutral", "displayName": "Ink Muted", "canonical": "#8d957c", "tonalRamp": ["#262a20", "#363b2e", "#474c3d", "#585e4c", "#69705c", "#7a826b", "#838b73", "#8d957c"] },
+      "electric-lime": { "role": "primary", "displayName": "Electric Lime", "canonical": "#c8f542", "tonalRamp": ["#1f2800", "#3a4d00", "#567200", "#729700", "#8ebc00", "#a9d92e", "#b8eb36", "#c8f542"] },
+      "electric-lime-deep": { "role": "primary", "displayName": "Electric Lime Deep", "canonical": "#a9d92e", "tonalRamp": ["#1a2400", "#2f4000", "#455c00", "#5b7800", "#719400", "#88b017", "#98c422", "#a9d92e"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero name only. Tight tracking, huge scale." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles (Selected work, The path here, Let's build something)." },
+      "title": { "displayName": "Title", "purpose": "Project names and timeline titles." },
+      "body": { "displayName": "Body", "purpose": "Paragraphs, max 62ch." },
+      "label": { "displayName": "Label", "purpose": "Nav, tags, meta — data only, mono." }
+    },
+    "shadows": [
+      { "name": "frame-lift", "value": "0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -12px rgba(0,0,0,0.65)", "purpose": "Project image frames — the only lifted elements." },
+      { "name": "deep", "value": "0 24px 64px -24px rgba(0,0,0,0.8)", "purpose": "Reserved for large floating surfaces." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "power3.out", "purpose": "All entrance reveals — exponential ease-out." },
+      { "name": "scroll-scrub", "value": "none (scrub)", "purpose": "Parallax, timeline rail, project image drift." },
+      { "name": "cue-drop", "value": "cubic-bezier(0.65, 0, 0.35, 1) 2.2s infinite", "purpose": "Hero scroll-cue filament drop." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "900px" },
+      { "name": "mobile", "value": "720px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Header link: mono uppercase, lime underline draws in on hover/active.",
+      "html": "<a class=\"ds-nav-link\">WORK</a>",
+      "css": ".ds-nav-link { position: relative; font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: #c2c9b4; text-decoration: none; padding-block: 0.35rem; transition: color 0.25s ease; } .ds-nav-link::after { content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: #c8f542; transform: scaleX(0); transform-origin: left; transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1); } .ds-nav-link:hover { color: #eef1e6; } .ds-nav-link:hover::after, .ds-nav-link.is-active::after { transform: scaleX(1); } .ds-nav-link.is-active { color: #c8f542; }"
+    },
+    {
+      "name": "Stack Tag",
+      "kind": "chip",
+      "refersTo": "stack-tag",
+      "description": "Tech-stack chip: raised surface, hairline border, mono uppercase, lime on hover.",
+      "html": "<span class=\"ds-tag\">React</span>",
+      "css": ".ds-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4rem 0.7rem; border: 1px solid rgba(238, 241, 230, 0.14); border-radius: 999px; color: #c2c9b4; background: #0f120c; transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease; } .ds-tag:hover { border-color: #c8f542; color: #c8f542; background: rgba(200, 245, 66, 0.12); }"
+    },
+    {
+      "name": "Project Link",
+      "kind": "button",
+      "refersTo": "ghost-link",
+      "description": "Inline action link: Space Grotesk 600, lime underline draw, arrow nudge on hover.",
+      "html": "<a class=\"ds-project-link\">Live site<span class=\"ds-project-link-arrow\">↗</span></a>",
+      "css": ".ds-project-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.95rem; letter-spacing: -0.01em; color: #eef1e6; text-decoration: none; position: relative; padding-bottom: 0.2rem; transition: color 0.25s ease; } .ds-project-link::after { content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 1.5px; background: #c8f542; transform: scaleX(0); transform-origin: right; transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1); } .ds-project-link:hover { color: #c8f542; } .ds-project-link:hover::after { transform: scaleX(1); transform-origin: left; } .ds-project-link:hover .ds-project-link-arrow { transform: translate(3px, -3px); } .ds-project-link-arrow { transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1); }"
+    },
+    {
+      "name": "Contact Row",
+      "kind": "nav",
+      "refersTo": "ghost-link",
+      "description": "Contact row: hairline-separated, mono label + display value, lime border and slide on hover.",
+      "html": "<a class=\"ds-contact-row\"><span class=\"ds-contact-label\">Email</span><span class=\"ds-contact-value\">hello@godwin.dev</span></a>",
+      "css": ".ds-contact-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; padding-block: 1.35rem; border-top: 1px solid rgba(238, 241, 230, 0.07); text-decoration: none; transition: border-color 0.3s ease; } .ds-contact-label { font-family: 'Space Mono', monospace; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8d957c; transition: color 0.3s ease; } .ds-contact-value { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.15rem, 3vw, 1.55rem); font-weight: 600; letter-spacing: -0.02em; color: #eef1e6; transition: color 0.3s ease, transform 0.35s cubic-bezier(0.65, 0, 0.35, 1); } .ds-contact-row:hover { border-top-color: #c8f542; } .ds-contact-row:hover .ds-contact-label { color: #c8f542; } .ds-contact-row:hover .ds-contact-value { color: #c8f542; transform: translateX(0.35rem); }"
+    },
+    {
+      "name": "Timeline Node",
+      "kind": "custom",
+      "refersTo": "ghost-link",
+      "description": "Timeline rail node: lime ring on near-black, rail fills with lime as you scroll.",
+      "html": "<div class=\"ds-timeline\"><div class=\"ds-timeline-rail\"></div><div class=\"ds-timeline-node\"></div><div class=\"ds-timeline-body\"><h4>Moringa School</h4><p class=\"ds-timeline-meta\">Software Engineering · Present</p></div></div>",
+      "css": ".ds-timeline { position: relative; padding-left: 2.4rem; } .ds-timeline-rail { position: absolute; left: 5px; top: 0.35rem; bottom: 0.35rem; width: 2px; background: rgba(238, 241, 230, 0.14); } .ds-timeline-node { position: absolute; left: 0; top: 1rem; width: 12px; height: 12px; border-radius: 50%; background: #0a0c08; border: 2px solid #c8f542; box-shadow: 0 0 0 4px rgba(200, 245, 66, 0.08); } .ds-timeline-body h4 { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; color: #eef1e6; margin: 0 0 0.3rem; } .ds-timeline-meta { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #c8f542; margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Instrument Panel",
+    "overview": "The site presents a developer's shipped work the way a well-built instrument panel presents a machine: a near-black field, one electric-lime filament of light, hairline rules, and data set in mono. Nothing shouts; everything is legible at a glance. The world is quiet and precise — a Nairobi developer's work shown under a single lime lamp, with whitespace and restraint doing the work that decoration usually does. The system is deliberately anti-template: no hero-screenshot-plus-card-grid, no gradient text, no glass for decoration. Projects are described in paragraphs rather than thumbnailed into sameness, and motion is orchestrated as one authored system rather than scattered hover effects.",
+    "keyCharacteristics": [
+      "Near-black green-tinted grounds with one electric-lime accent used as a system, not decoration",
+      "Hairline rules and mono data labels (indices, tags, coordinates) throughout",
+      "Space Grotesk display over Instrument Sans body; Space Mono reserved for data",
+      "Scroll-driven motion: Lenis smooth scroll, GSAP ScrollTrigger reveals and parallax, one light Three.js accent",
+      "Restraint is the brand: generous whitespace, more space above headings than below"
+    ],
+    "rules": [
+      { "name": "The One Filament Rule", "body": "Electric lime is reserved for interactive and orienting moments; it never fills backgrounds or borders at rest. If lime is used on more than ~5% of a resting screen, it's decoration.", "section": "colors" },
+      { "name": "The Data-Mono Rule", "body": "Mono never decorates. It appears only where the content is data: index numerals, stack tags, coordinates, meta labels. Body copy is never set in mono.", "section": "typography" },
+      { "name": "The Flat-At-Rest Rule", "body": "Surfaces are flat at rest; shadows appear only on elements that earn elevation (image frames). No hard offset shadows, no glow-as-decoration.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use electric lime only for interaction and orientation — nav active, links, indices, nodes, tags on hover.",
+      "Do set data (indices, tags, coordinates, meta) in Space Mono.",
+      "Do keep paragraphs at or under 62ch and set body in Instrument Sans.",
+      "Do give more vertical space above headings than below.",
+      "Do use hairline rules and tonal layering for separation before reaching for shadows.",
+      "Do honor prefers-reduced-motion: everything is visible and static without JS or motion."
+    ],
+    "donts": [
+      "Don't use gradient text, glass blur as decoration, or hard offset shadows.",
+      "Don't add eyebrows/kickers above headings — headings carry their own weight.",
+      "Don't set body copy in mono or decorate with emoji/Unicode glyphs.",
+      "Don't exceed -0.04em display tracking.",
+      "Don't ship project rows as equal image+title cards — every project carries a real description.",
+      "Don't hard-code colors; the palette lives in src/styles/tokens.css and the DESIGN.md frontmatter."
+    ]
+  }
+}

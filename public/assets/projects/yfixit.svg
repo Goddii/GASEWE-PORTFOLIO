@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="100%" height="100%" aria-label="YFixIt — Electronics Repair &amp; Marketplace" role="img">
+  <defs>
+    <radialGradient id="yfixGlow" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#B6FF3B" stop-opacity="0.15"/>
+      <stop offset="60%" stop-color="#101210" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#080909" stop-opacity="1"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="800" fill="#080909"/>
+  <rect width="1280" height="800" fill="url(#yfixGlow)"/>
+
+  <!-- Top bar -->
+  <g transform="translate(40, 30)">
+    <rect width="1200" height="56" rx="8" fill="#0e110e" stroke="#262d24" stroke-width="1.5"/>
+    <circle cx="28" cy="28" r="6" fill="#B6FF3B"/>
+    <text x="46" y="34" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">YFixIt // ELECTRONICS REPAIR &amp; RESALE</text>
+    <text x="480" y="33" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="12">M-PESA DARAJA CHECKOUT · ROLE-BASED AUTH</text>
+    
+    <rect x="1050" y="14" width="130" height="28" rx="14" fill="#152011" stroke="#B6FF3B" stroke-width="1"/>
+    <text x="1115" y="32" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600" text-anchor="middle">STK PUSH LIVE</text>
+  </g>
+
+  <!-- Marketplace Listings & Diagnosis Grid -->
+  <g transform="translate(40, 110)">
+    <!-- Main Left: Diagnosis & Catalog -->
+    <rect width="780" height="640" rx="12" fill="#0b0d0b" stroke="#222b1f" stroke-width="1.5"/>
+    <text x="32" y="44" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="20">Hardware Diagnostics &amp; Repair Catalog</text>
+    <text x="32" y="68" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="12">FILTER BY FAULT: LOGIC BOARD · DISPLAY · BATTERY CELL</text>
+
+    <!-- Item Cards -->
+    <g transform="translate(32, 95)">
+      <!-- Item 1 -->
+      <rect width="340" height="235" rx="8" fill="#121611" stroke="#283524" stroke-width="1"/>
+      <rect x="18" y="18" width="304" height="110" rx="6" fill="#080909" stroke="#1f281b" stroke-width="1"/>
+      <text x="30" y="50" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">MODEL: MACBOOK PRO M1 13"</text>
+      <text x="30" y="74" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="12">FAULT: SHORTED NAND PMIC (REPAIRABLE)</text>
+      <text x="30" y="100" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">KSh 32,500</text>
+      <text x="18" y="156" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="15">Logic Board Repair Tier 3</text>
+      <text x="18" y="178" fill="#777D78" font-family="'Inter', sans-serif" font-size="12">Component-level microsoldering diagnostics completed.</text>
+      <rect x="18" y="195" width="130" height="26" rx="13" fill="#182414" stroke="#B6FF3B" stroke-width="1"/>
+      <text x="83" y="212" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="10" text-anchor="middle">REPAIR VERIFIED</text>
+    </g>
+
+    <g transform="translate(400, 95)">
+      <!-- Item 2 -->
+      <rect width="340" height="235" rx="8" fill="#121611" stroke="#283524" stroke-width="1"/>
+      <rect x="18" y="18" width="304" height="110" rx="6" fill="#080909" stroke="#1f281b" stroke-width="1"/>
+      <text x="30" y="50" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">MODEL: THINKPAD X1 CARBON</text>
+      <text x="30" y="74" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="12">FAULT: REPLACED BATTERY &amp; THERMAL PASTE</text>
+      <text x="30" y="100" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">KSh 45,000</text>
+      <text x="18" y="156" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="15">Refurbished Field Laptop</text>
+      <text x="18" y="178" fill="#777D78" font-family="'Inter', sans-serif" font-size="12">Clean BIOS, new cell health 100%, 16GB RAM.</text>
+      <rect x="18" y="195" width="110" height="26" rx="13" fill="#152011" stroke="#B6FF3B" stroke-width="1"/>
+      <text x="73" y="212" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="10" text-anchor="middle">TEST PASSED</text>
+    </g>
+
+    <!-- Bottom Filter Status -->
+    <g transform="translate(32, 360)">
+      <rect width="708" height="240" rx="8" fill="#0e120e" stroke="#202a1d" stroke-width="1"/>
+      <text x="24" y="38" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">Automated M-Pesa Checkout Flow</text>
+      
+      <!-- Flow steps -->
+      <g transform="translate(24, 60)">
+        <rect width="140" height="70" rx="6" fill="#141a13" stroke="#B6FF3B" stroke-width="1"/>
+        <text x="14" y="28" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="10">STEP 01</text>
+        <text x="14" y="50" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="12">Buyer Cart (JWT)</text>
+
+        <line x1="140" y1="35" x2="180" y2="35" stroke="#B6FF3B" stroke-width="2"/>
+
+        <rect x="180" width="140" height="70" rx="6" fill="#141a13" stroke="#2c3a27" stroke-width="1"/>
+        <text x="194" y="28" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="10">STEP 02</text>
+        <text x="194" y="50" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="12">Flask Daraja API</text>
+
+        <line x1="320" y1="35" x2="360" y2="35" stroke="#777D78" stroke-width="2"/>
+
+        <rect x="360" width="140" height="70" rx="6" fill="#141a13" stroke="#2c3a27" stroke-width="1"/>
+        <text x="374" y="28" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="10">STEP 03</text>
+        <text x="374" y="50" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="12">STK PIN Prompt</text>
+
+        <line x1="500" y1="35" x2="540" y2="35" stroke="#B6FF3B" stroke-width="2"/>
+
+        <rect x="540" width="140" height="70" rx="6" fill="#152212" stroke="#B6FF3B" stroke-width="1.5"/>
+        <text x="554" y="28" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="10">STEP 04</text>
+        <text x="554" y="50" fill="#B6FF3B" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="12">Order Completed</text>
+      </g>
+      <text x="24" y="175" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">DARAJA ENDPOINTS: /api/mpesa/stkpush · /api/mpesa/callback (HMAC verified)</text>
+      <text x="24" y="200" fill="#E8EAE5" font-family="'IBM Plex Mono', monospace" font-size="11">DATABASE ATOMICITY: Listing marked sold only upon asynchronous callback 200 OK</text>
+    </g>
+  </g>
+
+  <!-- Right Sidebar: STK Push Simulator / Live Verification -->
+  <g transform="translate(850, 110)">
+    <rect width="390" height="640" rx="12" fill="#0b0d0b" stroke="#222b1f" stroke-width="1.5"/>
+    <text x="28" y="44" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">M-Pesa STK Gateway</text>
+    <text x="28" y="66" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">SAFARICOM DARAJA INTEGRATION</text>
+    <line x1="28" y1="84" x2="362" y2="84" stroke="#1f281b" stroke-width="1"/>
+
+    <!-- Phone Simulator Box -->
+    <g transform="translate(45, 110)">
+      <rect width="300" height="480" rx="28" fill="#080909" stroke="#354430" stroke-width="2"/>
+      <rect x="90" y="16" width="120" height="6" rx="3" fill="#1e261a"/>
+      
+      <!-- STK Dialog on phone -->
+      <rect x="25" y="120" width="250" height="240" rx="12" fill="#131911" stroke="#B6FF3B" stroke-width="1.5"/>
+      <text x="150" y="160" fill="#B6FF3B" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16" text-anchor="middle">M-PESA PAYBILL</text>
+      <text x="150" y="190" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="18" text-anchor="middle">Pay YFixIt KSh 32,500</text>
+      <text x="150" y="215" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11" text-anchor="middle">Account: ORD-88401</text>
+      
+      <!-- PIN boxes -->
+      <g transform="translate(60, 240)">
+        <rect width="35" height="35" rx="6" fill="#080909" stroke="#777D78"/>
+        <rect x="45" width="35" height="35" rx="6" fill="#080909" stroke="#777D78"/>
+        <rect x="90" width="35" height="35" rx="6" fill="#080909" stroke="#777D78"/>
+        <rect x="135" width="35" height="35" rx="6" fill="#080909" stroke="#777D78"/>
+      </g>
+      <text x="150" y="325" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" text-anchor="middle">Enter M-Pesa PIN to complete</text>
+    </g>
+  </g>
+</svg>

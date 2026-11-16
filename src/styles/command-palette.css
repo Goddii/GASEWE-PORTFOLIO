@@ -1,0 +1,346 @@
+/* ============================================================
+   Command Palette — Fast Discovery Modal (Cmd+K / Ctrl+K)
+   Directoryyy / Perfolios-inspired utility interface
+   ============================================================ */
+
+.cmd-palette {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(3rem, 12vh, 6rem) 1.25rem 2rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s var(--id-ease-portal, cubic-bezier(0.16, 1, 0.3, 1)),
+              visibility 0.22s var(--id-ease-portal, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.cmd-palette.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.cmd-palette__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 5, 5, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.cmd-palette__dialog {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: #0d100d;
+  border: 1px solid rgba(182, 255, 59, 0.22);
+  border-radius: 12px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85),
+              0 0 0 1px rgba(255, 255, 255, 0.05),
+              0 0 32px rgba(182, 255, 59, 0.08);
+  overflow: hidden;
+  transform: translateY(-8px) scale(0.98);
+  transition: transform 0.25s var(--id-ease-portal, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.cmd-palette.is-open .cmd-palette__dialog {
+  transform: translateY(0) scale(1);
+}
+
+/* Header & Search Input */
+.cmd-palette__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgba(119, 125, 120, 0.25);
+  background: rgba(18, 22, 16, 0.6);
+}
+
+.cmd-palette__prompt {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.85rem;
+  color: var(--id-accent, #B6FF3B);
+  font-weight: 600;
+  margin-right: 0.75rem;
+  user-select: none;
+  opacity: 0.9;
+}
+
+.cmd-palette__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--id-ink-0, #e8eae5);
+  font-family: var(--id-font-body, 'Inter', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  caret-color: var(--id-accent, #B6FF3B);
+}
+
+.cmd-palette__input::placeholder {
+  color: var(--id-graphite, #777d78);
+  font-size: 0.95rem;
+}
+
+.cmd-palette__close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: var(--id-ink-1, #c2c9b4);
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cmd-palette__close-btn:hover {
+  background: rgba(182, 255, 59, 0.15);
+  border-color: var(--id-accent, #B6FF3B);
+  color: var(--id-accent, #B6FF3B);
+}
+
+/* Results container */
+.cmd-palette__results {
+  max-height: 400px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.75rem 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(182, 255, 59, 0.25) transparent;
+}
+
+.cmd-palette__results::-webkit-scrollbar {
+  width: 5px;
+}
+
+.cmd-palette__results::-webkit-scrollbar-thumb {
+  background: rgba(182, 255, 59, 0.25);
+  border-radius: 4px;
+}
+
+/* Group headings */
+.cmd-palette__group-title {
+  padding: 0.5rem 0.75rem 0.35rem;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--id-graphite, #777d78);
+}
+
+/* Item */
+.cmd-palette__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--id-ink-0, #e8eae5);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.cmd-palette__item:hover,
+.cmd-palette__item.is-selected {
+  background: rgba(182, 255, 59, 0.08);
+  border-color: rgba(182, 255, 59, 0.2);
+  color: #ffffff;
+}
+
+.cmd-palette__item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.cmd-palette__item-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cmd-palette__item-title {
+  font-family: var(--id-font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cmd-palette__item.is-selected .cmd-palette__item-title {
+  color: var(--id-accent, #B6FF3B);
+}
+
+.cmd-palette__item-tag {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.62rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--id-ink-1, #c2c9b4);
+  letter-spacing: 0.02em;
+}
+
+.cmd-palette__item.is-selected .cmd-palette__item-tag {
+  background: rgba(182, 255, 59, 0.15);
+  color: var(--id-accent, #B6FF3B);
+}
+
+.cmd-palette__item-desc {
+  font-size: 0.8rem;
+  color: var(--id-ink-1, #c2c9b4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.8;
+}
+
+.cmd-palette__item-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.7rem;
+  color: var(--id-graphite, #777d78);
+  flex-shrink: 0;
+}
+
+.cmd-palette__item.is-selected .cmd-palette__item-meta {
+  color: var(--id-accent, #B6FF3B);
+}
+
+/* Empty State */
+.cmd-palette__empty {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.85rem;
+  color: var(--id-graphite, #777d78);
+}
+
+/* Footer / Keyboard hints */
+.cmd-palette__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1.25rem;
+  background: rgba(12, 14, 11, 0.9);
+  border-top: 1px solid rgba(119, 125, 120, 0.18);
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  color: var(--id-ink-2, rgba(232, 234, 229, 0.55));
+}
+
+.cmd-palette__hints {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.cmd-palette__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.cmd-palette__kbd {
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  color: var(--id-ink-0, #e8eae5);
+  font-size: 0.62rem;
+  font-weight: 500;
+}
+
+/* Nav Header Actions & Buttons */
+.site-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.site-nav__sound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.65rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(119, 125, 120, 0.28);
+  border-radius: 20px;
+  color: var(--id-ink-1, #c2c9b4);
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.2s var(--id-ease-portal, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.site-nav__sound-btn:hover,
+.site-nav__sound-btn.is-active {
+  background: rgba(182, 255, 59, 0.08);
+  border-color: rgba(182, 255, 59, 0.4);
+  color: var(--id-accent, #B6FF3B);
+}
+
+.site-nav__sound-icon {
+  font-size: 0.75rem;
+}
+
+.site-nav__cmd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(119, 125, 120, 0.28);
+  border-radius: 20px;
+  color: var(--id-ink-1, #c2c9b4);
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s var(--id-ease-portal, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.site-nav__cmd-btn:hover {
+  background: rgba(182, 255, 59, 0.08);
+  border-color: rgba(182, 255, 59, 0.4);
+  color: var(--id-ink-0, #e8eae5);
+}
+
+.site-nav__cmd-kbd {
+  padding: 0.08rem 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  color: var(--id-accent, #B6FF3B);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .site-nav__cmd-label {
+    display: none;
+  }
+  .cmd-palette {
+    padding-top: 1.5rem;
+  }
+}

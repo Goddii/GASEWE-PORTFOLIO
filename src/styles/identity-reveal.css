@@ -1,0 +1,163 @@
+/* ============================================================
+   Identity reveal — Phase 2 standalone hero prototype
+   3–4s opening: signal → character silhouette → particles → name
+   ============================================================ */
+
+.hero-reveal {
+  position: fixed;
+  inset: 0;
+  background: var(--id-bg-0);
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition:
+    opacity var(--id-dur-particle) var(--id-ease-particle),
+    visibility var(--id-dur-particle) var(--id-ease-particle);
+}
+
+.hero-reveal.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.reveal-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  padding-inline: var(--id-gutter);
+}
+
+/* ---- signal: small geometric mark ---- */
+
+.reveal-signal {
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 16px var(--id-accent-soft), 0 0 40px var(--id-accent-faint);
+  margin: 0 auto var(--id-space-4);
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+/* ---- character silhouette ---- */
+
+.reveal-character {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto var(--id-space-4);
+  opacity: 0;
+  transform: scale(0.55);
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+}
+
+/* ---- particles canvas ---- */
+
+.reveal-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+}
+
+/* ---- typography ---- */
+
+.reveal-typography {
+  opacity: 0;
+}
+
+.reveal-name {
+  font-family: var(--id-font-display);
+  font-size: var(--id-text-display-size);
+  font-weight: var(--id-text-display-weight);
+  line-height: var(--id-text-display-line);
+  letter-spacing: var(--id-text-display-track);
+  color: var(--id-ink-0);
+  margin: 0 0 var(--id-space-2);
+  display: inline-block;
+}
+
+.reveal-name-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.reveal-positioning {
+  font-family: var(--id-font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--id-ink-1);
+  margin: 0 0 var(--id-space-3);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.reveal-supporting {
+  font-family: var(--id-font-mono);
+  font-size: var(--id-text-mono-size);
+  font-weight: var(--id-text-mono-weight);
+  letter-spacing: var(--id-text-mono-track);
+  color: var(--id-graphite);
+  margin: 0;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* ---- skip button ---- */
+
+.reveal-skip {
+  position: fixed;
+  top: var(--id-space-4);
+  right: var(--id-space-4);
+  z-index: 1000;
+  background: transparent;
+  border: 1px solid var(--id-line);
+  color: var(--id-ink-1);
+  padding: 0.5rem 1rem;
+  font-family: var(--id-font-mono);
+  font-size: 0.68rem;
+  font-weight: var(--id-text-mono-weight);
+  letter-spacing: var(--id-text-mono-track);
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.reveal-skip:hover {
+  border-color: var(--id-accent);
+  color: var(--id-accent);
+}
+
+/* ---- reduced motion: skip reveal entirely ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal {
+    display: none !important;
+  }
+}
+
+/* ---- mobile adjustments ---- */
+
+@media (max-width: 720px) {
+  .reveal-character {
+    width: 80px;
+    height: 80px;
+  }
+
+  .reveal-name {
+    font-size: clamp(2.8rem, 18vw, 5rem);
+  }
+
+  .reveal-skip {
+    top: var(--id-space-2);
+    right: var(--id-space-2);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.62rem;
+  }
+}

@@ -1,0 +1,738 @@
+/* ============================================================
+   THE ENGINEERING CONSTELLATION
+   Interactive mapping of systems, architecture, and applied technical domains.
+   Background: #0a0a0a · Emerald Highlights: #10b981
+   ============================================================ */
+
+.constellation-section {
+  padding-block: var(--id-section-gap, clamp(4rem, 10vh, 7rem));
+  background: transparent;
+  border: none;
+  position: relative;
+  overflow: visible;
+}
+
+/* Background ambient radial glow: soft cyan electric */
+.constellation-section::before {
+  content: '';
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Two-Column Desktop Grid ---- */
+.constellation {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: var(--id-gutter, 2rem);
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+/* ============================================================
+   LEFT COLUMN: CONSTELLATION GRAPH STAGE (SEAMLESS CELESTIAL)
+   ============================================================ */
+.constellation__stage-wrap {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 14px;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* Tactical HUD corner coordinates */
+.constellation__stage-hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.constellation__hud-corner {
+  position: absolute;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(0, 240, 255, 0.75);
+  padding: 10px 14px;
+}
+
+.constellation__hud-corner--tl { top: 0; left: 0; }
+.constellation__hud-corner--tr { top: 0; right: 0; }
+.constellation__hud-corner--bl { bottom: 0; left: 0; color: rgba(139, 148, 158, 0.6); }
+.constellation__hud-corner--br { bottom: 0; right: 0; color: rgba(0, 240, 255, 0.6); }
+
+/* The Graph Canvas / DOM Stage */
+.constellation__stage {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  user-select: none;
+}
+
+/* Connecting SVG overlay */
+.constellation__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* SVG Path Lines */
+.constellation-edge {
+  fill: none;
+  stroke: rgba(0, 240, 255, 0.2);
+  stroke-width: 1.2px;
+  stroke-dasharray: 4 4;
+  transition: all 0.35s ease;
+}
+
+.constellation-edge.is-active {
+  stroke: #00f0ff;
+  stroke-width: 2.2px;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.9));
+  opacity: 1 !important;
+}
+
+.constellation-edge.is-dim {
+  opacity: 0.08 !important;
+  stroke: rgba(119, 125, 120, 0.15);
+}
+
+/* Kinetic Pulse flow on active line */
+.constellation-edge-pulse {
+  fill: none;
+  stroke: #34d399;
+  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-dasharray: 12 180;
+  animation: constellationPulse 2.4s linear infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.constellation-edge-pulse.is-active {
+  opacity: 1;
+}
+
+@keyframes constellationPulse {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ============================================================
+   CENTRAL HUB NODE
+   ============================================================ */
+.constellation__hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.constellation__hub-rings {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.constellation__hub-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(16, 185, 129, 0.35);
+  animation: hubRotate 30s linear infinite;
+}
+
+.constellation__hub-ring--outer {
+  width: 86px;
+  height: 86px;
+}
+
+.constellation__hub-ring--inner {
+  width: 66px;
+  height: 66px;
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  animation: hubRotateReverse 20s linear infinite;
+}
+
+.constellation__hub-core {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00f0ff 0%, #005b66 70%, #021a1f 100%);
+  box-shadow: 
+    0 0 20px rgba(16, 185, 129, 0.7),
+    0 0 45px rgba(16, 185, 129, 0.3);
+  animation: hubBreathing 3.5s ease-in-out infinite;
+}
+
+@keyframes hubRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes hubRotateReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes hubBreathing {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), 0 0 40px rgba(16, 185, 129, 0.25);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 28px rgba(16, 185, 129, 0.9), 0 0 60px rgba(16, 185, 129, 0.4);
+  }
+}
+
+.constellation__hub-label {
+  margin-top: 8px;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #34d399;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+  white-space: nowrap;
+  background: rgba(10, 15, 12, 0.9);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* ============================================================
+   DISCIPLINE NODES (ORBIT NODES)
+   ============================================================ */
+.constellation__node {
+  position: absolute;
+  z-index: 5;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 8px 12px;
+  background: rgba(13, 17, 14, 0.92);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+}
+
+.constellation__node--discipline {
+  transform: translate(-50%, -50%);
+}
+
+.constellation__node:hover,
+.constellation__node.is-active {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: #00f0ff;
+  box-shadow: 
+    0 0 24px rgba(16, 185, 129, 0.45),
+    0 4px 16px rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -50%) scale(1.06);
+  opacity: 1 !important;
+}
+
+.constellation__node-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.constellation__node-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38f8ff;
+  box-shadow: 0 0 6px #00f0ff;
+  transition: transform 0.25s ease;
+}
+
+.constellation__node:hover .constellation__node-dot,
+.constellation__node.is-active .constellation__node-dot {
+  transform: scale(1.4);
+  background: #00f0ff;
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+.constellation__node-title {
+  font-family: var(--id-font-body, 'Space Grotesk', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e8eae5;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.constellation__node.is-active .constellation__node-title {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+}
+
+.constellation__node-sub {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: #777d78;
+  padding-left: 14px;
+}
+
+.constellation__node.is-active .constellation__node-sub {
+  color: #00f0ff;
+}
+
+/* ============================================================
+   PROJECT SATELLITE NODES
+   ============================================================ */
+.constellation__project-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(10, 13, 11, 0.85);
+  border: 1px solid rgba(119, 125, 120, 0.25);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  color: #c2c9b4;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+}
+
+.constellation__project-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(119, 125, 120, 0.6);
+  transition: all 0.25s ease;
+}
+
+.constellation__project-node:hover,
+.constellation__project-node.is-active {
+  background: rgba(0, 240, 255, 0.12);
+  border-color: #00f0ff;
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+  transform: translate(-50%, -50%) scale(1.05);
+  opacity: 1 !important;
+}
+
+.constellation__project-node.is-active .constellation__project-dot {
+  background: #00f0ff;
+  box-shadow: 0 0 8px #00f0ff;
+}
+
+/* Dim state for visual isolation */
+.constellation__stage.has-selection .constellation__node:not(.is-active),
+.constellation__stage.has-selection .constellation__project-node:not(.is-active) {
+  opacity: 0.15;
+  filter: grayscale(0.8);
+}
+
+/* ============================================================
+   RIGHT COLUMN: DYNAMIC INFORMATION & EXPLAINER PANEL
+   ============================================================ */
+.constellation__panel {
+  background: rgba(8, 12, 16, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: 14px;
+  box-shadow: 
+    0 0 30px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(0, 240, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: clamp(1.4rem, 2.5vw, 2rem);
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.constellation__panel.is-active {
+  border-color: rgba(0, 240, 255, 0.55);
+  box-shadow: 
+    0 0 35px rgba(0, 240, 255, 0.15),
+    inset 0 1px 0 rgba(56, 248, 255, 0.3);
+}
+
+/* ---- Panel Default / Idle State ---- */
+.constellation-panel__idle {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-block: auto;
+}
+
+.constellation-panel__status-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: #00f0ff;
+}
+
+.constellation-panel__beacon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00f0ff;
+  box-shadow: 0 0 8px #00f0ff;
+  animation: beaconPulse 2s ease-in-out infinite;
+}
+
+@keyframes beaconPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.constellation-panel__idle-heading {
+  font-family: var(--id-font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  font-weight: 600;
+  color: #e8eae5;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.constellation-panel__idle-text {
+  font-family: var(--id-font-body, 'Inter', sans-serif);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #8d957c;
+  margin: 0;
+}
+
+.constellation-panel__quick-select {
+  margin-top: 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(16, 185, 129, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.constellation-panel__quick-label {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  color: #777d78;
+}
+
+.constellation-panel__quick-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.constellation-pill {
+  padding: 5px 11px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(119, 125, 120, 0.3);
+  color: #c2c9b4;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.constellation-pill:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #00f0ff;
+  color: #ffffff;
+}
+
+/* ---- Panel Active Discipline State ---- */
+.constellation-panel__active {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  animation: panelFadeIn 0.3s ease;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.constellation-panel__badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.constellation-panel__domain-tag {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: #34d399;
+  font-weight: 600;
+}
+
+.constellation-panel__active-dot {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.65rem;
+  color: #00f0ff;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.constellation-panel__title {
+  font-family: var(--id-font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.constellation-panel__summary {
+  font-family: var(--id-font-body, 'Inter', sans-serif);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #e8eae5;
+  margin: 0;
+  margin-top: 0.4rem;
+}
+
+/* Hard Proof Metrics Banner */
+.constellation-panel__metrics-banner {
+  background: rgba(10, 20, 15, 0.9);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: inset 0 0 12px rgba(16, 185, 129, 0.1);
+}
+
+.constellation-panel__metrics-k {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: #777d78;
+  font-weight: 600;
+}
+
+.constellation-panel__metrics-val {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #34d399;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+}
+
+.constellation-panel__metrics-icon {
+  color: #00f0ff;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Linked Projects Section */
+.constellation-panel__projects {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.constellation-panel__projects-label {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: #777d78;
+}
+
+.constellation-panel__project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Custom scrollbar for project list */
+.constellation-panel__project-list::-webkit-scrollbar {
+  width: 4px;
+}
+.constellation-panel__project-list::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.3);
+  border-radius: 2px;
+}
+
+.constellation-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(20, 25, 22, 0.6);
+  border: 1px solid rgba(119, 125, 120, 0.2);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.constellation-card:hover {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: #00f0ff;
+  transform: translateX(3px);
+}
+
+.constellation-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.constellation-card__name {
+  font-family: var(--id-font-body, 'Space Grotesk', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e8eae5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.constellation-card__meta {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.64rem;
+  color: #777d78;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.constellation-card:hover .constellation-card__meta {
+  color: #34d399;
+}
+
+.constellation-card__arrow {
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.8rem;
+  color: #00f0ff;
+  transition: transform 0.2s ease;
+}
+
+.constellation-card:hover .constellation-card__arrow {
+  transform: translateX(3px);
+}
+
+.constellation-panel__reset-btn {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid rgba(119, 125, 120, 0.3);
+  border-radius: 6px;
+  font-family: var(--id-font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  color: #777d78;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.constellation-panel__reset-btn:hover {
+  color: #34d399;
+  border-color: #00f0ff;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN: MOBILE VIEWPORT COLLAPSE
+   ============================================================ */
+@media (max-width: 900px) {
+  .constellation {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .constellation__stage-wrap {
+    height: auto;
+  }
+
+  .constellation__stage {
+    height: 480px;
+  }
+
+  /* Scale and compact down nodes on mobile */
+  .constellation__node {
+    padding: 6px 10px;
+  }
+  .constellation__node-title {
+    font-size: 0.72rem;
+  }
+  .constellation__node-sub {
+    display: none;
+  }
+
+  .constellation__hub-rings {
+    width: 70px;
+    height: 70px;
+  }
+  .constellation__hub-ring--outer { width: 68px; height: 68px; }
+  .constellation__hub-ring--inner { width: 50px; height: 50px; }
+  .constellation__hub-core { width: 32px; height: 32px; }
+
+  .constellation__panel {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  /* On very small screens, convert stage into an interactive vertical card stack */
+  .constellation__stage {
+    height: 380px;
+  }
+
+  .constellation__project-node {
+    font-size: 0.6rem;
+    padding: 3px 6px;
+  }
+}

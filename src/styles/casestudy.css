@@ -1,0 +1,540 @@
+/* ============================================================
+   Case Study View V2 — Cinematic Engineering Artifact
+   High-tech HUD layout with responsive 2-column hero stage,
+   telemetry panel, architecture flow mount, and structured specs.
+   ============================================================ */
+
+.casestudy-v2 {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: calc(3.5rem + var(--id-section-gap) * 0.3) var(--id-gutter) var(--id-section-gap);
+  color: var(--id-ink-0, #E8EAE5);
+}
+
+/* ---- Top Navigation Bar ---- */
+.cs-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.1));
+}
+
+.cs-topbar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--id-accent, #B6FF3B);
+  text-decoration: none;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.cs-topbar__back:hover {
+  color: #ffffff;
+  transform: translateX(-4px);
+}
+
+.cs-topbar__telemetry {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--id-ink-2, #777D78);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cs-topbar__sep {
+  color: var(--id-accent, #B6FF3B);
+  opacity: 0.6;
+}
+
+/* ---- Header Stage ---- */
+.cs-header {
+  margin-bottom: 2.5rem;
+}
+
+.cs-header__eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.cs-header__badge {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--id-accent, #B6FF3B);
+  background: rgba(182, 255, 59, 0.08);
+  border: 1px solid rgba(182, 255, 59, 0.3);
+  padding: 0.25rem 0.65rem;
+  border-radius: 2px;
+}
+
+.cs-header__meta {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--id-ink-1, #A0A59E);
+  text-transform: uppercase;
+}
+
+.cs-header__title {
+  font-family: var(--id-font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--id-ink-0, #E8EAE5);
+  margin: 0 0 0.8rem 0;
+  outline: none;
+}
+
+.cs-header__tagline {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.5;
+  color: var(--id-accent, #B6FF3B);
+  max-width: 58ch;
+  margin: 0;
+}
+
+/* ---- Two-Column Hero Stage ---- */
+.cs-hero-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: stretch;
+  margin-bottom: 3.5rem;
+}
+
+.casestudy-hero__viewport {
+  position: relative;
+  background: var(--id-bg-1, #0d0f0e);
+  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.12));
+  border-radius: var(--id-r-lg, 12px);
+  overflow: hidden;
+  box-shadow: 0 24px 64px -24px rgba(0, 0, 0, 0.9);
+}
+
+.casestudy-hero__frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+}
+
+.casestudy-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.casestudy-hero__scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.25) 51%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 2;
+}
+
+.casestudy-hero__overlay-bar {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.casestudy-hero__badge {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #080909;
+  background: var(--id-accent, #B6FF3B);
+  padding: 0.25rem 0.55rem;
+  border-radius: 2px;
+}
+
+.casestudy-hero__coords {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--id-ink-0, #E8EAE5);
+  background: rgba(8, 9, 9, 0.85);
+  backdrop-filter: blur(6px);
+  padding: 0.25rem 0.55rem;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ---- Telemetry Sidebar Card ---- */
+.cs-telemetry-hud {
+  background: var(--id-bg-1, #0d0f0e);
+  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.12));
+  border-radius: var(--id-r-lg, 12px);
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cs-telemetry__top {
+  border-bottom: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.08));
+  padding-bottom: 0.8rem;
+}
+
+.cs-telemetry__indicator {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--id-accent, #B6FF3B);
+}
+
+.cs-telemetry__metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+
+.cs-metric-cell {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.08));
+  border-radius: 4px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-metric-val {
+  font-family: var(--id-font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--id-ink-0, #E8EAE5);
+}
+
+.cs-metric-lbl {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--id-ink-2, #777D78);
+  margin-top: 0.2rem;
+}
+
+.cs-telemetry__spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.08));
+  border-bottom: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.08));
+}
+
+.cs-spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.78rem;
+}
+
+.cs-spec-label {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--id-ink-2, #777D78);
+}
+
+.cs-spec-val {
+  font-family: var(--id-font-mono, monospace);
+  color: var(--id-ink-0, #E8EAE5);
+  font-weight: 500;
+}
+
+.cs-telemetry__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: auto;
+}
+
+/* Button UI */
+.cs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.65rem 1.2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.cs-btn--primary {
+  background: var(--id-accent, #B6FF3B);
+  color: #080909;
+}
+
+.cs-btn--primary:hover {
+  background: #c5ff63;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(182, 255, 59, 0.35);
+}
+
+.cs-btn--ghost {
+  background: transparent;
+  color: var(--id-ink-0, #E8EAE5);
+  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.15));
+}
+
+.cs-btn--ghost:hover {
+  border-color: var(--id-accent, #B6FF3B);
+  color: var(--id-accent, #B6FF3B);
+}
+
+/* ---- Technical Content Grid ---- */
+.cs-body-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1000px;
+}
+
+.cs-block {
+  background: var(--id-bg-1, #0d0f0e);
+  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.1));
+  border-radius: var(--id-r-lg, 10px);
+  padding: clamp(1.5rem, 3vw, 2.2rem);
+}
+
+.cs-block--callout {
+  border-left: 3px solid var(--id-accent, #B6FF3B);
+  background: linear-gradient(135deg, rgba(182, 255, 59, 0.04) 0%, var(--id-bg-1, #0d0f0e) 60%);
+}
+
+.cs-block--highlight {
+  border-color: rgba(182, 255, 59, 0.25);
+  background: radial-gradient(circle at 0% 0%, rgba(182, 255, 59, 0.03) 0%, var(--id-bg-1, #0d0f0e) 70%);
+}
+
+.cs-block__header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.cs-block__num {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--id-accent, #B6FF3B);
+  background: rgba(182, 255, 59, 0.08);
+  border: 1px solid rgba(182, 255, 59, 0.2);
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+}
+
+.cs-block__title {
+  font-family: var(--id-font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--id-ink-0, #E8EAE5);
+  margin: 0;
+}
+
+.cs-block__body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--id-ink-1, #A0A59E);
+  margin: 0;
+}
+
+.cs-block__subsolution {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--id-line-soft, rgba(232, 234, 229, 0.12));
+}
+
+.cs-block__sublabel {
+  display: block;
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--id-accent, #B6FF3B);
+  margin-bottom: 0.4rem;
+}
+
+.cs-block__subtext {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--id-ink-0, #E8EAE5);
+  margin: 0;
+}
+
+/* Architecture Flow in Case Study */
+.cs-flow-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.8rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.1));
+  border-radius: 6px;
+}
+
+.cs-flow-step {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.78rem;
+  color: var(--id-ink-0, #E8EAE5);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.35rem 0.7rem;
+  border-radius: 3px;
+}
+
+.cs-flow-arrow {
+  color: var(--id-accent, #B6FF3B);
+  font-size: 0.85rem;
+}
+
+.cs-flow-mount {
+  margin-top: 0.5rem;
+}
+
+/* Verified Stack Pills */
+.cs-tech-pills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cs-tech-pill {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--id-ink-0, #E8EAE5);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.15));
+  padding: 0.35rem 0.75rem;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.cs-tech-pill:hover {
+  border-color: var(--id-accent, #B6FF3B);
+  color: var(--id-accent, #B6FF3B);
+}
+
+.cs-credit-note {
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.68rem;
+  color: var(--id-ink-2, #777D78);
+  margin-top: 1rem;
+}
+
+/* ---- Next Project Footer ---- */
+.cs-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.1));
+}
+
+.cs-next-card {
+  display: block;
+  background: var(--id-bg-1, #0d0f0e);
+  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.15));
+  border-radius: var(--id-r-lg, 10px);
+  padding: 1.8rem 2.2rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.cs-next-card:hover {
+  border-color: var(--id-accent, #B6FF3B);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.7);
+}
+
+.cs-next-label {
+  display: block;
+  font-family: var(--id-font-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--id-accent, #B6FF3B);
+  margin-bottom: 0.4rem;
+}
+
+.cs-next-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cs-next-title {
+  font-family: var(--id-font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--id-ink-0, #E8EAE5);
+}
+
+.cs-next-arrow {
+  font-size: 1.8rem;
+  color: var(--id-accent, #B6FF3B);
+  transition: transform 0.25s ease;
+}
+
+.cs-next-card:hover .cs-next-arrow {
+  transform: translateX(6px);
+}
+
+/* ---- Responsive Breakpoints ---- */
+@media (max-width: 960px) {
+  .cs-hero-stage {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .cs-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  .cs-telemetry__metrics {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="100%" height="100%" aria-label="Yetu Housing Agency — Real Estate Platform" role="img">
+  <defs>
+    <radialGradient id="yetuGlow" cx="50%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#B6FF3B" stop-opacity="0.12"/>
+      <stop offset="60%" stop-color="#0e110e" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#080909" stop-opacity="1"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="800" fill="#080909"/>
+  <rect width="1280" height="800" fill="url(#yetuGlow)"/>
+
+  <!-- Top bar -->
+  <g transform="translate(40, 30)">
+    <rect width="1200" height="56" rx="8" fill="#0c0e0c" stroke="#252d22" stroke-width="1.5"/>
+    <circle cx="28" cy="28" r="6" fill="#B6FF3B"/>
+    <text x="46" y="34" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">YETU HOUSING AGENCY // PROPERTY PLATFORM</text>
+    <text x="480" y="33" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="12">REACT 19 · FIRESTORE DATA LAYER · TEAM PROJECT (4)</text>
+    
+    <rect x="1050" y="14" width="130" height="28" rx="14" fill="#152011" stroke="#B6FF3B" stroke-width="1"/>
+    <text x="1115" y="32" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600" text-anchor="middle">VERCEL LIVE</text>
+  </g>
+
+  <!-- Property Filter Interface & Listings Grid -->
+  <g transform="translate(40, 110)">
+    <!-- Search / Filter Header -->
+    <rect width="1200" height="90" rx="12" fill="#0e120e" stroke="#202a1d" stroke-width="1.5"/>
+    <text x="32" y="38" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11">DYNAMIC FIRESTORE QUERY BUILDER</text>
+    
+    <!-- Filter inputs -->
+    <g transform="translate(32, 48)">
+      <rect width="260" height="32" rx="6" fill="#141a13" stroke="#2c3a27"/>
+      <text x="14" y="21" fill="#E8EAE5" font-family="'Inter', sans-serif" font-size="12">Location: Nairobi (Kilimani, Westlands)</text>
+
+      <rect x="280" width="220" height="32" rx="6" fill="#141a13" stroke="#2c3a27"/>
+      <text x="294" y="21" fill="#E8EAE5" font-family="'Inter', sans-serif" font-size="12">Type: 2-3 Bedroom Apartment</text>
+
+      <rect x="520" width="220" height="32" rx="6" fill="#141a13" stroke="#2c3a27"/>
+      <text x="534" y="21" fill="#E8EAE5" font-family="'Inter', sans-serif" font-size="12">Price: KSh 45k - 90k / mo</text>
+
+      <rect x="760" width="140" height="32" rx="16" fill="#B6FF3B"/>
+      <text x="830" y="21" fill="#080909" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="12" text-anchor="middle">Apply Filter (24)</text>
+    </g>
+
+    <!-- Property Listings Cards -->
+    <g transform="translate(0, 115)">
+      <!-- Card 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="380" height="420" rx="12" fill="#0b0d0b" stroke="#222b1f" stroke-width="1.5"/>
+        <rect x="18" y="18" width="344" height="200" rx="8" fill="#141b13" stroke="#1f281b"/>
+        <text x="32" y="50" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11">KILIMANI // RESIDENTIAL</text>
+        <text x="32" y="110" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="24">KSh 75,000 / mo</text>
+        <text x="32" y="135" fill="#777D78" font-family="'Inter', sans-serif" font-size="12">3 Bed · 2 Bath · High-speed Fiber · Backup Generator</text>
+        
+        <text x="18" y="250" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">Silver Oak Heights</text>
+        <text x="18" y="275" fill="#777D78" font-family="'Inter', sans-serif" font-size="13">Modern finishing, verified landlord title deed, perimeter CCTV.</text>
+        
+        <line x1="18" y1="350" x2="362" y2="350" stroke="#1c2419" stroke-width="1"/>
+        <text x="18" y="385" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">AGENT: VERIFIED</text>
+        <text x="362" y="385" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" text-anchor="end">VIEW DETAILS →</text>
+      </g>
+
+      <!-- Card 2 -->
+      <g transform="translate(410, 0)">
+        <rect width="380" height="420" rx="12" fill="#0b0d0b" stroke="#222b1f" stroke-width="1.5"/>
+        <rect x="18" y="18" width="344" height="200" rx="8" fill="#141b13" stroke="#1f281b"/>
+        <text x="32" y="50" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11">WESTLANDS // PENTHOUSE</text>
+        <text x="32" y="110" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="24">KSh 120,000 / mo</text>
+        <text x="32" y="135" fill="#777D78" font-family="'Inter', sans-serif" font-size="12">4 Bed · Rooftop Terrace · Borehole Water</text>
+        
+        <text x="18" y="250" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">The Azure Pavilion</text>
+        <text x="18" y="275" fill="#777D78" font-family="'Inter', sans-serif" font-size="13">Unobstructed city skyline views, biometric entry, dual parking.</text>
+        
+        <line x1="18" y1="350" x2="362" y2="350" stroke="#1c2419" stroke-width="1"/>
+        <text x="18" y="385" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">AGENT: VERIFIED</text>
+        <text x="362" y="385" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" text-anchor="end">VIEW DETAILS →</text>
+      </g>
+
+      <!-- Card 3 -->
+      <g transform="translate(820, 0)">
+        <rect width="380" height="420" rx="12" fill="#0b0d0b" stroke="#222b1f" stroke-width="1.5"/>
+        <rect x="18" y="18" width="344" height="200" rx="8" fill="#141b13" stroke="#1f281b"/>
+        <text x="32" y="50" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11">LAVINGTON // TOWNHOUSE</text>
+        <text x="32" y="110" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="24">KSh 95,000 / mo</text>
+        <text x="32" y="135" fill="#777D78" font-family="'Inter', sans-serif" font-size="12">3 Bed · Private Garden · Solar Inverter</text>
+        
+        <text x="18" y="250" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">Lavington Green Villa</text>
+        <text x="18" y="275" fill="#777D78" font-family="'Inter', sans-serif" font-size="13">Gated community, children play zone, solar backup power.</text>
+        
+        <line x1="18" y1="350" x2="362" y2="350" stroke="#1c2419" stroke-width="1"/>
+        <text x="18" y="385" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">AGENT: VERIFIED</text>
+        <text x="362" y="385" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" text-anchor="end">VIEW DETAILS →</text>
+      </g>
+    </g>
+  </g>
+</svg>

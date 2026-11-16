@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>bake — run atlas</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #111;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="stage"></canvas>
+    <script type="module">
+      /**
+       * Bake page (build-time only — never shipped).
+       *
+       * Loads the CC0 Quaternius Universal Base Character (rigged, no anims)
+       * and the CC0 Universal Animation Library GLB (43 clips, identical
+       * 65-bone names), plays `Jog_Fwd_Loop`, and renders FRAMES frames into
+       * a horizontal sprite atlas with a transparent background, then
+       * converts the atlas to grayscale (site palette is monochrome).
+       *
+       * The camera is placed automatically on the *side* of the figure such
+       * that its running direction maps to screen-right: forward axis is
+       * detected by sampling a foot bone across the cycle.
+       *
+       * scripts/bake-run.cjs drives this page over CDP and writes the atlas
+       * to public/assets/figures/run-atlas.png + src/data/runAtlas.js.
+       */
+      import * as THREE from 'three';
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+      const FRAMES = 22;
+      const CELL_W = 160;
+      const CELL_H = 220;
+      const FILL = 0.94; // figure fills 94% of the cell height
+
+      const CHAR_URL = '/refs/models/ubc/Superhero_Male_FullBody.gltf';
+      const LIB_URL = '/refs/models/ual/UAL1_Standard.glb';
+      const CLIP_NAME = 'Jog_Fwd_Loop';
+
+      const fail = (err) => {
+        window.__bake = { done: true, error: String(err && err.stack ? err.stack : err) };
+      };
+      window.__bake = { done: false };
+
+      async function main() {
+        const loader = new GLTFLoader();
+        const [charGltf, libGltf] = await Promise.all([
+          loader.loadAsync(CHAR_URL),
+          loader.loadAsync(LIB_URL),
+        ]);
+
+        const clip =
+          libGltf.animations.find((a) => a.name === CLIP_NAME) || libGltf.animations[0];
+        if (!clip) throw new Error('no animations in library GLB');
+
+        const char = charGltf.scene;
+        char.traverse((o) => {
+          if (o.isMesh) {
+            o.frustumCulled = false;
+            o.castShadow = false;
+          }
+        });
+
+        // ---- renderer (transparent, exact cell size) ----
+        const canvas = document.getElementById('stage');
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: true,
+          alpha: true,
+          preserveDrawingBuffer: true,
+        });
+        renderer.setPixelRatio(1);
+        renderer.setSize(CELL_W, CELL_H, false);
+        renderer.setClearColor(0x000000, 0);
+
+        const scene = new THREE.Scene();
+        scene.add(char);
+        // monochrome-friendly studio light: key + fill + rim
+        scene.add(new THREE.HemisphereLight(0xffffff, 0x303030, 1.15));
+        const key = new THREE.DirectionalLight(0xffffff, 1.7);
+        key.position.set(2.5, 4, 3.5);
+        scene.add(key);
+        const rim = new THREE.DirectionalLight(0xffffff, 1.0);
+        rim.position.set(-3, 2, -4);
+        scene.add(rim);
+
+        // ---- clip playback ----
+        const mixer = new THREE.AnimationMixer(char);
+        const action = mixer.clipAction(clip);
+        action.setLoop(THREE.LoopRepeat, Infinity);
+        action.play();
+        const duration = clip.duration;
+
+        // ---- forward-axis detection: sample a foot/hand bone across the
+        // cycle and take its largest horizontal displacement vector ----
+        char.updateMatrixWorld(true);
+        let tracker = null;
+        char.traverse((o) => {
+          if (!tracker && /foot_[lr]$/i.test(o.name)) tracker = o;
+        });
+        if (!tracker) {
+          char.traverse((o) => {
+            if (!tracker && /hand_[lr]$/i.test(o.name)) tracker = o;
+          });
+        }
+        if (!tracker) throw new Error('no foot/hand bone to detect facing');
+
+        const SAMPLES = 24;
+        const pts = [];
+        const tmp = new THREE.Vector3();
+        for (let i = 0; i < SAMPLES; i++) {
+          mixer.setTime((i / SAMPLES) * duration);
+          char.updateMatrixWorld(true);
+          pts.push(tracker.getWorldPosition(new THREE.Vector3()));
+        }
+        let best = null;
+        for (let i = 0; i < SAMPLES; i++) {
+          for (let j = 0; j < SAMPLES; j++) {
+            const d = tmp.subVectors(pts[j], pts[i]);
+            const horiz = Math.hypot(d.x, d.z);
+            if (!best || horiz > best.len) best = { len: horiz, dx: d.x, dz: d.z };
+          }
+        }
+        const f = new THREE.Vector3(best.dx, 0, best.dz).normalize(); // facing
+        // facing → screen-right ⇒ camera sits at center − cross(up, f)·dist
+        const side = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), f).normalize();
+
+        // ---- framing on the UNION bbox across the whole cycle ----
+        // A rest-pose bbox is not enough: mid-cycle legs and arms stretch far
+        // wider than standing still, and the ink would bleed across cell
+        // borders (caught by the driver's validator). Sample the cycle,
+        // union the per-pose boxes, and frame on the projected extents:
+        // screen-horizontal = along `f`, screen-vertical = world y.
+        const POSES = 24;
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        const cV = new THREE.Vector3();
+        for (let i = 0; i <= POSES; i++) {
+          mixer.setTime((i / POSES) * duration);
+          char.updateMatrixWorld(true);
+          const b = new THREE.Box3().setFromObject(char);
+          for (const cx of [b.min.x, b.max.x])
+            for (const cy of [b.min.y, b.max.y])
+              for (const cz of [b.min.z, b.max.z]) {
+                cV.set(cx, cy, cz);
+                const along = cV.dot(f); // extent along the facing axis
+                if (along < minX) minX = along;
+                if (along > maxX) maxX = along;
+                if (cy < minY) minY = cy;
+                if (cy > maxY) maxY = cy;
+              }
+        }
+        const spanX = maxX - minX;
+        const spanY = maxY - minY;
+        const center = f.clone().multiplyScalar((minX + maxX) / 2);
+        center.y = (minY + maxY) / 2;
+
+        const fov = 26;
+        const aspect = CELL_W / CELL_H;
+        const tan = Math.tan((fov * Math.PI) / 360);
+        // tighter fill on width than height → guaranteed in-cell breathing
+        // room on every frame even at the widest stride
+        const distH = spanY / 2 / tan / 0.92;
+        const distW = spanX / 2 / tan / aspect / 0.82;
+        const dist = Math.max(distH, distW) * 1.05;
+
+        const camera = new THREE.PerspectiveCamera(fov, aspect, 0.1, 100);
+        // side = cross(up, f); the camera must sit on the *negative* side of
+        // it, or the facing axis projects to screen-LEFT (viewer's right is
+        // cross(forward, up) = -side). The runtime mirrors assuming
+        // screen-right, so this sign is load-bearing.
+        camera.position.copy(center).addScaledVector(side, -dist);
+        camera.lookAt(center);
+        camera.updateMatrixWorld(true);
+
+        // hard assertion: facing must map onto the camera's screen-right axis
+        const xAxis = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+        if (xAxis.dot(f) < 0.9) {
+          throw new Error('facing does not map to screen-right: dot=' + xAxis.dot(f).toFixed(3));
+        }
+
+        // ---- render the strip ----
+        const atlas = document.createElement('canvas');
+        atlas.width = CELL_W * FRAMES;
+        atlas.height = CELL_H;
+        const actx = atlas.getContext('2d');
+
+        for (let i = 0; i < FRAMES; i++) {
+          mixer.setTime((i / FRAMES) * duration);
+          char.updateMatrixWorld(true);
+          renderer.render(scene, camera);
+          actx.drawImage(canvas, i * CELL_W, 0);
+        }
+
+        // ---- grayscale (alpha preserved) ----
+        const img = actx.getImageData(0, 0, atlas.width, atlas.height);
+        const d = img.data;
+        for (let i = 0; i < d.length; i += 4) {
+          if (d[i + 3] === 0) {
+            d[i] = d[i + 1] = d[i + 2] = 0;
+            continue;
+          }
+          const l = (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) | 0;
+          d[i] = d[i + 1] = d[i + 2] = l;
+        }
+        actx.putImageData(img, 0, 0);
+
+        // ---- validation data for the driver: per-frame ink coverage and
+        // per-frame bbox (every frame must contain the figure, consistently
+        // framed — no crops, no empty cells, nothing escaping the cell) ----
+        const frameInk = new Array(FRAMES).fill(0);
+        const fx0 = new Array(FRAMES).fill(CELL_W);
+        const fx1 = new Array(FRAMES).fill(-1);
+        const fy0 = new Array(FRAMES).fill(CELL_H);
+        const fy1 = new Array(FRAMES).fill(-1);
+        for (let p = 0; p < atlas.width * atlas.height; p++) {
+          if (d[p * 4 + 3] > 8) {
+            const x = p % atlas.width;
+            const y = (p / atlas.width) | 0;
+            const cell = (x / CELL_W) | 0;
+            frameInk[cell]++;
+            const lx = x - cell * CELL_W;
+            if (lx < fx0[cell]) fx0[cell] = lx;
+            if (lx > fx1[cell]) fx1[cell] = lx;
+            if (y < fy0[cell]) fy0[cell] = y;
+            if (y > fy1[cell]) fy1[cell] = y;
+          }
+        }
+
+        window.__bake = {
+          done: true,
+          frames: FRAMES,
+          cellW: CELL_W,
+          cellH: CELL_H,
+          duration,
+          clipName: clip.name,
+          facing: [Number(f.x.toFixed(3)), Number(f.z.toFixed(3))],
+          frameInk,
+          bbox: { x0: fx0, x1: fx1, y0: fy0, y1: fy1 },
+          png: atlas.toDataURL('image/png'),
+        };
+      }
+
+      main().catch(fail);
+    </script>
+  </body>
+</html>

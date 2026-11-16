@@ -1,0 +1,37 @@
+/**
+ * transitions.css — route transitions.
+ * `.vt-hero` is added (and removed) by router.js so exactly one element at a time owns the name.
+ */
+.vt-hero { view-transition-name: project-hero; }
+
+::view-transition-old(root) { animation: vt-out 280ms var(--ease-out) both; }
+::view-transition-new(root) { animation: vt-in 420ms var(--ease-out) both; }
+::view-transition-group(project-hero) { animation-duration: 520ms; animation-timing-function: var(--ease-out-expo); }
+
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; } }
+
+/* GSAP fallback: a ground-coloured shutter with one lime scan line. */
+.shutter {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg-0);
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+}
+.shutter__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--glow);
+  box-shadow: 0 0 12px var(--glow-soft);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 0.01ms !important; }
+  .vt-hero { view-transition-name: none; }
+}

@@ -1,0 +1,65 @@
+/* ============================================================
+   THE TRAVELER (D5/D7) — fixed full-viewport canvas + rail,
+   plus the ORIGIN landmark (the retired runner band's start line).
+
+   CSS owns: the fixed box, the journey rail hairline, the origin
+   label/floor. The figure itself is canvas (traveler.js) —
+   one property, one engine. Everything here is additive: without
+   JS only the rail and the origin hairline render.
+
+   Stacking: z-index 1 sits above page content backgrounds but far
+   below the header (--z-nav 99), the grain (95) and the skip link
+   (200). pointer-events: none means elementFromPoint never lands
+   on the canvas — asserted by GATE 10.
+   ============================================================ */
+
+/* The full-viewport traveler canvas is disabled in favor of grounded narrative figures */
+.traveler {
+  display: none !important;
+}
+
+.traveler__canvas {
+  display: none !important;
+}
+
+.traveler__rail {
+  display: none !important;
+}
+
+/* ---- the origin landmark (static start line, survives no-JS) ---- */
+
+.origin {
+  position: relative;
+  height: clamp(140px, 20vh, 220px);
+  border-block: 1px solid var(--line-soft);
+}
+
+.origin__label {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--gutter);
+  margin: 0;
+  font-size: var(--text-meta-size);
+  font-weight: var(--text-meta-weight);
+  letter-spacing: var(--text-meta-track);
+  text-transform: uppercase;
+  color: var(--ink-1);
+  pointer-events: none;
+}
+
+/* the start line — present with or without JS */
+.origin__floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 22%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line) 12%,
+    var(--line) 88%,
+    transparent
+  );
+  pointer-events: none;
+}

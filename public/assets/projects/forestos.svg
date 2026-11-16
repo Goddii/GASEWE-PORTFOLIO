@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="100%" height="100%" aria-label="ForestOS — Geospatial Conservation Platform" role="img">
+  <defs>
+    <radialGradient id="forestGlow" cx="60%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#B6FF3B" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#0f140e" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#080909" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="scanBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B6FF3B" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#B6FF3B" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#B6FF3B" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="bloomSoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1280" height="800" fill="#080909"/>
+  <rect width="1280" height="800" fill="url(#forestGlow)"/>
+
+  <!-- Top App Navigation Bar -->
+  <g id="topbar">
+    <rect x="30" y="30" width="1220" height="60" rx="8" fill="#0d100d" stroke="#252d22" stroke-width="1.5"/>
+    <circle cx="65" cy="60" r="7" fill="#B6FF3B"/>
+    <text x="85" y="66" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" letter-spacing="1">ForestOS // FOREST LINE PLATFORM</text>
+    <text x="440" y="65" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="12" letter-spacing="1.5">GIS · POSTGIS · QR VERIFICATION</text>
+    
+    <!-- Status pill right -->
+    <rect x="1060" y="44" width="165" height="32" rx="16" fill="#152011" stroke="#B6FF3B" stroke-width="1"/>
+    <circle cx="1080" cy="60" r="4" fill="#B6FF3B"/>
+    <text x="1095" y="64" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600">AUDIT LEDGER: LIVE</text>
+  </g>
+
+  <!-- Main GIS Map Viewport -->
+  <g id="gis-viewport" transform="translate(30, 110)">
+    <!-- Map Outer Border -->
+    <rect width="820" height="650" rx="12" fill="#0c0f0c" stroke="#222b1f" stroke-width="1.5"/>
+    
+    <!-- Map Spatial Grid -->
+    <g stroke="#1a2417" stroke-width="1" opacity="0.7">
+      <line x1="0" y1="130" x2="820" y2="130"/>
+      <line x1="0" y1="260" x2="820" y2="260"/>
+      <line x1="0" y1="390" x2="820" y2="390"/>
+      <line x1="0" y1="520" x2="820" y2="520"/>
+      <line x1="164" y1="0" x2="164" y2="650"/>
+      <line x1="328" y1="0" x2="328" y2="650"/>
+      <line x1="492" y1="0" x2="492" y2="650"/>
+      <line x1="656" y1="0" x2="656" y2="650"/>
+    </g>
+
+    <!-- Forest Contour Polygons (PostGIS Sectors) -->
+    <!-- Sector A: High density canopy -->
+    <path d="M 120 180 Q 240 100 380 140 T 600 220 T 560 440 T 320 510 T 140 400 Z" 
+          fill="#142612" stroke="#B6FF3B" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.85"/>
+
+    <!-- Sector B: Regeneration Zone -->
+    <path d="M 450 320 Q 580 280 690 350 T 740 540 T 520 590 T 430 460 Z" 
+          fill="#0e1d0d" stroke="#527d42" stroke-width="1.5" opacity="0.7"/>
+
+    <!-- Field Ranger Patrol Track (Breadcrumb trail) -->
+    <path d="M 160 380 L 240 310 L 320 340 L 410 230 L 490 280 L 530 360 L 610 390 L 680 480" 
+          fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#bloomSoft)"/>
+    
+    <!-- Verified QR Tagging Checkpoints -->
+    <g class="checkpoint" transform="translate(320, 340)">
+      <circle cx="0" cy="0" r="14" fill="#080909" stroke="#B6FF3B" stroke-width="2"/>
+      <circle cx="0" cy="0" r="5" fill="#B6FF3B"/>
+    </g>
+    <g class="checkpoint" transform="translate(490, 280)">
+      <circle cx="0" cy="0" r="14" fill="#080909" stroke="#B6FF3B" stroke-width="2"/>
+      <circle cx="0" cy="0" r="5" fill="#B6FF3B"/>
+    </g>
+    <g class="checkpoint" transform="translate(610, 390)">
+      <circle cx="0" cy="0" r="16" fill="#080909" stroke="#FFFFFF" stroke-width="2.5" filter="url(#bloomSoft)"/>
+      <circle cx="0" cy="0" r="6" fill="#B6FF3B"/>
+    </g>
+
+    <!-- Active Inspection Card overlay on checkpoint -->
+    <g transform="translate(430, 140)">
+      <rect width="260" height="110" rx="8" fill="#080909" stroke="#B6FF3B" stroke-width="1.5" opacity="0.95"/>
+      <text x="18" y="30" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600">TREE TAG #KE-99420-OR</text>
+      <text x="18" y="52" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="14">Prunus Africana (Specimen)</text>
+      <text x="18" y="74" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">COORDINATES: 00°22′S 37°18′E</text>
+      <text x="18" y="94" fill="#E8EAE5" font-family="'IBM Plex Mono', monospace" font-size="11">CRYPTOGRAPHIC PROOF: VERIFIED</text>
+    </g>
+
+    <!-- Map Coordinate Labels -->
+    <text x="24" y="626" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="12">LAT: -0.3672° | LON: 37.3012° | EPSG:4326 | POSTGIS SPATIAL CLUSTER</text>
+  </g>
+
+  <!-- Right Telemetry & Audit Sidebar -->
+  <g id="sidebar" transform="translate(870, 110)">
+    <rect width="380" height="650" rx="12" fill="#0c0f0c" stroke="#222b1f" stroke-width="1.5"/>
+    
+    <!-- Sidebar Header -->
+    <text x="28" y="44" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">Telemetry & Verification</text>
+    <text x="28" y="66" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">OFFLINE QUEUE &amp; BOUNDARY ENGINE</text>
+    <line x1="28" y1="84" x2="352" y2="84" stroke="#1f281b" stroke-width="1"/>
+
+    <!-- Telemetry Cards -->
+    <g transform="translate(28, 105)">
+      <rect width="324" height="95" rx="8" fill="#131911" stroke="#263521" stroke-width="1"/>
+      <text x="18" y="28" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="10">CANOPY MONITORING INDEX</text>
+      <text x="18" y="62" fill="#B6FF3B" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28">98.4%</text>
+      <text x="18" y="82" fill="#E8EAE5" font-family="'IBM Plex Mono', monospace" font-size="11">Zero illegal boundary encroachments</text>
+    </g>
+
+    <g transform="translate(28, 220)">
+      <rect width="324" height="95" rx="8" fill="#131911" stroke="#263521" stroke-width="1"/>
+      <text x="18" y="28" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="10">OFFLINE SYNC CACHE (INDEXEDDB)</text>
+      <text x="18" y="62" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28">148 Records</text>
+      <text x="18" y="82" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">Auto-reconciles when ranger reaches base</text>
+    </g>
+
+    <g transform="translate(28, 335)">
+      <rect width="324" height="95" rx="8" fill="#131911" stroke="#263521" stroke-width="1"/>
+      <text x="18" y="28" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="10">SPATIAL INDEXING ENGINE</text>
+      <text x="18" y="62" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28">PostGIS GIST</text>
+      <text x="18" y="82" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11">Sub-10ms point-in-polygon queries</text>
+    </g>
+
+    <!-- System Architecture Breakdown -->
+    <g transform="translate(28, 455)">
+      <text x="0" y="20" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="14">Architecture Highlights</text>
+      <rect x="0" y="35" width="324" height="135" rx="8" fill="#080909" stroke="#1f281b" stroke-width="1"/>
+      <text x="16" y="64" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">1. Offline PWA surveyor app (React + TS)</text>
+      <text x="16" y="90" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">2. Idempotent sync API (Python / Flask)</text>
+      <text x="16" y="116" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">3. Polygon boundary guard (PostgreSQL)</text>
+      <text x="16" y="142" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11">4. Tamper-evident audit exports</text>
+    </g>
+  </g>
+</svg>

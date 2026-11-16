@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="100%" height="100%" aria-label="The Shadow Sorceress — 3D WebGL Scroll Experience" role="img">
+  <defs>
+    <radialGradient id="sorceressGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#B6FF3B" stop-opacity="0.25"/>
+      <stop offset="50%" stop-color="#141a14" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#080909" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="bloomIntense" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="800" fill="#080909"/>
+  <rect width="1280" height="800" fill="url(#sorceressGlow)"/>
+
+  <!-- Top bar -->
+  <g transform="translate(40, 30)">
+    <rect width="1200" height="56" rx="8" fill="#0c0e0c" stroke="#252d22" stroke-width="1.5"/>
+    <circle cx="28" cy="28" r="6" fill="#B6FF3B"/>
+    <text x="46" y="34" fill="#E8EAE5" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">THE SHADOW SORCERESS // 3D SCROLL EXPERIENCE</text>
+    <text x="560" y="33" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="12">REACT THREE FIBER · GSAP SCROLLTRIGGER · BLOOM PASS</text>
+    
+    <rect x="1050" y="14" width="130" height="28" rx="14" fill="#152011" stroke="#B6FF3B" stroke-width="1"/>
+    <text x="1115" y="32" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600" text-anchor="middle">60 FPS WEBGL</text>
+  </g>
+
+  <!-- 3D Viewport Simulation -->
+  <g transform="translate(40, 110)">
+    <rect width="1200" height="640" rx="12" fill="#090b09" stroke="#1f281b" stroke-width="1.5"/>
+
+    <!-- Wireframe 3D Perspective Plane Floor -->
+    <g stroke="#1a2417" stroke-width="1" opacity="0.6">
+      <line x1="600" y1="420" x2="100" y2="640"/>
+      <line x1="600" y1="420" x2="300" y2="640"/>
+      <line x1="600" y1="420" x2="500" y2="640"/>
+      <line x1="600" y1="420" x2="700" y2="640"/>
+      <line x1="600" y1="420" x2="900" y2="640"/>
+      <line x1="600" y1="420" x2="1100" y2="640"/>
+      <ellipse cx="600" cy="540" rx="420" ry="80" fill="none"/>
+      <ellipse cx="600" cy="580" rx="520" ry="95" fill="none"/>
+    </g>
+
+    <!-- Sorceress Glowing Crystal Ring & Staff Silhouette -->
+    <g transform="translate(600, 360)">
+      <!-- Giant glowing arcane ring (scrubbed rotation) -->
+      <circle cx="0" cy="-40" r="180" fill="none" stroke="#B6FF3B" stroke-width="2.5" stroke-dasharray="240 60 40 40" filter="url(#bloomIntense)" opacity="0.85"/>
+      <circle cx="0" cy="-40" r="140" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="180 80" opacity="0.7"/>
+
+      <!-- Sorceress Stylized Vector Silhouette -->
+      <!-- Cloak / Robes -->
+      <path d="M -60 140 L -90 240 L 90 240 L 60 140 Z" fill="#111612" stroke="#2c3a27" stroke-width="1.5"/>
+      <path d="M -40 20 L -80 140 L 80 140 L 40 20 Z" fill="#161e18" stroke="#FFFFFF" stroke-width="1" opacity="0.8"/>
+      <!-- Head / Hood -->
+      <path d="M 0 -60 C -30 -60 -40 -30 -35 10 L 35 10 C 40 -30 30 -60 0 -60 Z" fill="#080909" stroke="#B6FF3B" stroke-width="2"/>
+      
+      <!-- Crystal Staff -->
+      <line x1="85" y1="240" x2="95" y2="-120" stroke="#777D78" stroke-width="4"/>
+      <!-- Glowing Crystal -->
+      <polygon points="95,-160 115,-125 95,-90 75,-125" fill="#FFFFFF" stroke="#B6FF3B" stroke-width="3" filter="url(#bloomIntense)"/>
+      <circle cx="95" cy="-125" r="8" fill="#B6FF3B" filter="url(#bloomIntense)"/>
+    </g>
+
+    <!-- HUD Overlay for 3D Camera & Model Optimization -->
+    <g transform="translate(40, 40)">
+      <rect width="280" height="150" rx="8" fill="#080909" stroke="#252d22" stroke-width="1" opacity="0.9"/>
+      <text x="18" y="32" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600">CAMERA &amp; SHADER METRICS</text>
+      <text x="18" y="58" fill="#E8EAE5" font-family="'IBM Plex Mono', monospace" font-size="12">ROTATION SCRUB: 0° → 360°</text>
+      <text x="18" y="82" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">MODEL SOURCE: 134 MB</text>
+      <text x="18" y="104" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="12">COMPRESSED GLTF: 9 MB (meshopt)</text>
+      <text x="18" y="126" fill="#E8EAE5" font-family="'IBM Plex Mono', monospace" font-size="11">DRACO + WEBP TEXTURES</text>
+    </g>
+
+    <g transform="translate(880, 40)">
+      <rect width="280" height="150" rx="8" fill="#080909" stroke="#252d22" stroke-width="1" opacity="0.9"/>
+      <text x="18" y="32" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600">POST-PROCESSING PIPELINE</text>
+      <text x="18" y="58" fill="#E8EAE5" font-family="'IBM Plex Mono', monospace" font-size="11">UNREALBLOOMPASS (LUMINANCE 0.6)</text>
+      <text x="18" y="82" fill="#777D78" font-family="'IBM Plex Mono', monospace" font-size="11">SELECTIVE RIM LIGHT GLOW</text>
+      <text x="18" y="104" fill="#E8EAE5" font-family="'IBM Plex Mono', monospace" font-size="11">GSAP SCROLLTRIGGER SYNC</text>
+      <text x="18" y="126" fill="#B6FF3B" font-family="'IBM Plex Mono', monospace" font-size="11">TARGET: 60 FPS DESKTOP &amp; LAPTOP</text>
+    </g>
+  </g>
+</svg>

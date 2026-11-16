@@ -1,0 +1,54 @@
+/* ============================================================
+   Motion — reveal hooks + reduced-motion fallback
+   GSAP sets initial states via from() tweens; this file only
+   holds CSS-driven motion and the safety net.
+   ============================================================ */
+
+[data-reveal] {
+  will-change: transform, opacity;
+}
+
+/* If JS never loads (or is disabled), content must be fully visible.
+   GSAP's from() tweens apply their hidden state only when JS runs. */
+html.no-js [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ...and before GSAP hydrates, avoid a visible flash by keeping
+   reveals at full opacity until the first animation tick. */
+html.js [data-reveal] {
+  opacity: 1;
+}
+
+/* ---- reduced motion: hard stop everything ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal],
+  [data-project],
+  [data-hero-reveal],
+  .project__img-wrap,
+  .timeline__rail::after {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .marquee__track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+}

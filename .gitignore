@@ -1,0 +1,11 @@
+node_modules
+dist
+.DS_Store
+*.local
+npm-debug.log*
+node_modules.old/
+refs/inspiration/*.mp4
+refs/models/
+.vscode/
+.env*
+
