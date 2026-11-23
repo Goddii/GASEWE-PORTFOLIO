@@ -11,6 +11,6 @@ export const site = {
   tagline: 'Full-stack developer — Nairobi, Kenya',
   email: 'otienogodwin23@gmail.com',
   github: 'https://github.com/Goddii',
-  linkedin: 'https://www.linkedin.com/in/godwin-odhiambo-bb28b3419',
+  linkedin: 'https://www.linkedin.com/in/godwinodhiambo/',
   cv: '/Godwin_Odhiambo_CV_Full.pdf',
 };

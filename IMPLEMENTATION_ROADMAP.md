@@ -157,7 +157,7 @@ Provide a memorable finale that echoes the hero's opening sequence, converging a
   3. Action cards illuminate:
      - **Email**: `otienogodwin23@gmail.com` (1-click copy with feedback notification)
      - **GitHub**: `github.com/Goddii` (direct link with live repo count badge)
-     - **LinkedIn**: `linkedin.com/in/godwin-odhiambo-bb28b3419`
+     - **LinkedIn**: `https://www.linkedin.com/in/godwinodhiambo/`
      - **Curriculum Vitae**: Direct download link to `/Godwin_Odhiambo_CV_Full.pdf`
 
 ---

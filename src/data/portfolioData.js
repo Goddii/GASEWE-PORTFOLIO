@@ -14,7 +14,7 @@ export const profileData = {
   timezone: "EAT (UTC+3)",
   email: "otienogodwin23@gmail.com",
   github: "https://github.com/Goddii",
-  linkedin: "https://www.linkedin.com/in/godwin-odhiambo-bb28b3419",
+  linkedin: "https://www.linkedin.com/in/godwinodhiambo/",
   cvPath: "/Godwin_Odhiambo_CV_Full.pdf",
 
   executiveSummary:

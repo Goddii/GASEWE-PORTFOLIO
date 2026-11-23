@@ -70,7 +70,7 @@ const staticCommands = [
     group: 'Quick Actions',
     title: 'Open LinkedIn Profile',
     tag: 'EXTERNAL',
-    desc: 'linkedin.com/in/godwin-odhiambo',
+    desc: 'linkedin.com/in/godwinodhiambo',
     meta: 'OPEN',
     execute: () => {
       window.open(site.linkedin, '_blank', 'noopener');
