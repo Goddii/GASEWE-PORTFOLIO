@@ -103,7 +103,7 @@ export default function IntroStage({ onTransitionComplete }) {
         className="absolute inset-0 w-full h-full object-cover cursor-pointer select-none"
         style={{ filter: 'brightness(0.98)' }}
       >
-        <source src="/Folder_video.mp4" type="video/mp4" />
+        <source src="/Folder_video1.mp4" type="video/mp4" />
         <source src="/Folder_opening_revealing_portfolio_6fd612b4.mp4" type="video/mp4" />
         <source src="/video_1.mp4" type="video/mp4" />
       </video>
