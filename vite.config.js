@@ -1,29 +1,14 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
   base: '/',
   build: {
     target: 'es2020',
     sourcemap: false,
     assetsInlineLimit: 4096,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'motion': ['gsap', 'motion', 'lenis']
-        }
-      }
-    },
-    // Performance optimizations
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
-    // Limit chunk size
-    chunkSizeWarningLimit: 1000,
-    modulePreload: false
+    chunkSizeWarningLimit: 1200,
   },
   server: {
     port: 5174,

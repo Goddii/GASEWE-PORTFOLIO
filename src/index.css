@@ -1,0 +1,71 @@
+@import "./styles/flow.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background-color: #0c0f12;
+
+  --id-accent: #00f0ff;
+  --id-font-mono: 'IBM Plex Mono', monospace;
+  --id-font-display: 'Space Grotesk', sans-serif;
+  --id-ink-0: #f4f4f5;
+  --id-ink-1: #a1a1aa;
+  --id-ink-2: #71717a;
+  --id-line-soft: rgba(255, 255, 255, 0.12);
+  --id-line-strong: rgba(0, 240, 255, 0.4);
+  --id-r-md: 8px;
+  --id-r-sm: 6px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0c0f12;
+  color: #e2e8f0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Faint architectural blueprint grid background */
+.architectural-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Faint dot pattern */
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Hide scrollbar for clean tab scrolling on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom sleek scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0f12;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.4);
+}
