@@ -1,5 +1,6 @@
 /* ============================================================
    Flow diagram — animated visual execution simulation of system architectures
+   Strictly matched to the technical cyan & slate palette (#00f0ff & #0c0f12 / #14181f)
    ============================================================ */
 
 .flow {
@@ -8,8 +9,8 @@
   gap: 1.25rem;
   margin: 0;
   padding: clamp(1rem, 2.5vw, 1.8rem);
-  background: rgba(10, 11, 11, 0.85);
-  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.1));
+  background: rgba(14, 18, 24, 0.9);
+  border: 1px solid var(--id-line-soft, rgba(255, 255, 255, 0.1));
   border-radius: var(--id-r-md, 8px);
   position: relative;
   overflow: hidden;
@@ -20,7 +21,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--id-accent, #B6FF3B);
+  color: var(--id-accent, #00f0ff);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -32,19 +33,19 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--id-accent, #B6FF3B);
-  box-shadow: 0 0 8px var(--id-accent, #B6FF3B);
+  background: var(--id-accent, #00f0ff);
+  box-shadow: 0 0 8px var(--id-accent, #00f0ff);
 }
 
 .flow__stage {
   position: relative;
   width: 100%;
   height: clamp(240px, 35vw, 360px);
-  background: radial-gradient(circle at center, rgba(182, 255, 59, 0.04) 0%, rgba(0, 0, 0, 0.5) 100%),
+  background: radial-gradient(circle at center, rgba(0, 240, 255, 0.05) 0%, rgba(10, 13, 17, 0.85) 100%),
               linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
               linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 100% 100%, 28px 28px, 28px 28px;
-  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.12));
+  border: 1px solid var(--id-line-soft, rgba(255, 255, 255, 0.12));
   border-radius: var(--id-r-sm, 6px);
   overflow: hidden;
 }
@@ -59,20 +60,20 @@
 }
 
 .flow__edge {
-  stroke: rgba(255, 255, 255, 0.18);
+  stroke: rgba(255, 255, 255, 0.16);
   stroke-width: 2px;
   stroke-linecap: round;
   transition: stroke 0.3s ease, stroke-width 0.3s ease;
 }
 
 .flow__edge.is-live {
-  stroke: var(--id-accent, #B6FF3B);
+  stroke: var(--id-accent, #00f0ff);
   stroke-width: 3px;
-  filter: drop-shadow(0 0 6px var(--id-accent, #B6FF3B));
+  filter: drop-shadow(0 0 8px var(--id-accent, #00f0ff));
 }
 
 .flow__edge.is-drawn {
-  stroke: rgba(182, 255, 59, 0.5);
+  stroke: rgba(0, 240, 255, 0.45);
   stroke-width: 2px;
 }
 
@@ -80,13 +81,13 @@
   position: absolute;
   transform: translate(-50%, -50%);
   padding: 6px 14px;
-  background: #111313;
-  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.15));
+  background: #11151a;
+  border: 1px solid var(--id-line-soft, rgba(255, 255, 255, 0.15));
   border-radius: var(--id-r-sm, 6px);
   font-family: var(--id-font-mono, monospace);
   font-size: clamp(0.7rem, 1.4vw, 0.82rem);
   font-weight: 500;
-  color: var(--id-ink-0, #E8EAE5);
+  color: var(--id-ink-0, #f4f4f5);
   white-space: nowrap;
   z-index: 2;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
@@ -95,10 +96,10 @@
 }
 
 .flow__node.is-pulse {
-  border-color: var(--id-accent, #B6FF3B);
+  border-color: var(--id-accent, #00f0ff);
   color: #ffffff;
-  box-shadow: 0 0 16px var(--id-accent, #B6FF3B), 0 0 30px rgba(182, 255, 59, 0.4);
-  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 0 16px var(--id-accent, #00f0ff), 0 0 30px rgba(0, 240, 255, 0.35);
+  transform: translate(-50%, -50%) scale(1.08);
 }
 
 .flow__packet {
@@ -107,7 +108,7 @@
   height: 10px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 0 10px var(--id-accent, #B6FF3B), 0 0 20px var(--id-accent, #B6FF3B);
+  box-shadow: 0 0 10px var(--id-accent, #00f0ff), 0 0 20px var(--id-accent, #00f0ff);
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 3;
@@ -119,7 +120,7 @@
   font-family: var(--id-font-mono, monospace);
   font-size: 0.82rem;
   letter-spacing: 0.05em;
-  color: var(--id-accent, #B6FF3B);
+  color: var(--id-accent, #00f0ff);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -136,22 +137,22 @@
   gap: 6px;
   padding: 6px 16px;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--id-line-soft, rgba(232, 234, 229, 0.15));
+  border: 1px solid var(--id-line-soft, rgba(255, 255, 255, 0.15));
   border-radius: var(--id-r-pill, 9999px);
   font-family: var(--id-font-mono, monospace);
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--id-ink-1, #A1A49D);
+  color: var(--id-ink-1, #a1a1aa);
   cursor: pointer;
-  transition: all var(--id-dur-fast, 0.15s) ease;
+  transition: all 0.15s ease;
 }
 
 .flow__btn:hover {
-  background: rgba(182, 255, 59, 0.1);
-  border-color: var(--id-accent, #B6FF3B);
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--id-accent, #00f0ff);
   color: #ffffff;
-  box-shadow: 0 0 12px rgba(182, 255, 59, 0.2);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
 }
 
 .flow__log {
@@ -174,34 +175,34 @@
   font-family: var(--id-font-mono, monospace);
   font-size: 0.78rem;
   line-height: 1.4;
-  color: var(--id-ink-2, #6F726B);
+  color: var(--id-ink-2, #71717a);
   transition: all 0.3s ease;
 }
 
 .flow__step-n {
-  color: var(--id-ink-2, #6F726B);
+  color: var(--id-ink-2, #71717a);
   font-size: 0.7rem;
   font-weight: 700;
   flex-shrink: 0;
 }
 
 .flow__step.is-active {
-  background: rgba(182, 255, 59, 0.08);
-  border-left-color: var(--id-accent, #B6FF3B);
-  color: var(--id-ink-0, #E8EAE5);
+  background: rgba(0, 240, 255, 0.08);
+  border-left-color: var(--id-accent, #00f0ff);
+  color: var(--id-ink-0, #f4f4f5);
 }
 
 .flow__step.is-active .flow__step-n {
-  color: var(--id-accent, #B6FF3B);
+  color: var(--id-accent, #00f0ff);
 }
 
 .flow__step.is-done {
-  color: var(--id-ink-1, #A1A49D);
-  border-left-color: rgba(182, 255, 59, 0.35);
+  color: var(--id-ink-1, #a1a1aa);
+  border-left-color: rgba(0, 240, 255, 0.35);
 }
 
 .flow__step.is-done .flow__step-n {
-  color: var(--id-accent, #B6FF3B);
+  color: var(--id-accent, #00f0ff);
 }
 
 @media (max-width: 640px) {

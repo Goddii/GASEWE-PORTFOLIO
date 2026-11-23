@@ -10,39 +10,58 @@
 
 
 :root {
-  /* ---- colour system (Organic Precision) ---- */
+  /* ---- THE ART OF BUILDING PALETTE (AONNOY IDE ARCHITECTURE) ---- */
 
   /* grounds & surfaces */
-  --id-bg-0: #000000; /* pure velvet black — page ground */
-  --id-bg-1: #06090e; /* raised obsidian surface */
-  --id-bg-2: #0b111a; /* media well / inset surface */
-  --id-glass: rgba(0, 0, 0, 0.85);
+  --bg: #08090B;          /* Obsidian — deepest space */
+  --cell: #17191D;        /* Graphite — editor tab & card surface */
+  --cell-inset: #101215;  /* Deep inset well */
+  --id-bg-0: #08090B;
+  --id-bg-1: #17191D;
+  --id-bg-2: #212429;
+  --id-glass: rgba(23, 25, 29, 0.88);
 
   /* ink / typography */
-  --id-ink-0: #F0F6FC; /* starlight white — primary text */
-  --id-ink-1: #9DA7B3; /* starlight muted — secondary text */
-  --id-ink-2: rgba(240, 246, 252, 0.55); /* least-emphasis text */
+  --fg: #F5F5F2;          /* Ivory — primary high-contrast text */
+  --mut: #DADBDD;         /* Silver — secondary editorial text */
+  --com: #8E959E;         /* Monospace code comments (// comment) */
+  --body: #C2C6CC;        /* Editorial paragraph text */
+  --id-ink-0: #F5F5F2;
+  --id-ink-1: #DADBDD;
+  --id-ink-2: #8E959E;
 
   /* rules & borders */
-  --id-line: rgba(0, 240, 255, 0.22);
-  --id-line-soft: rgba(0, 240, 255, 0.12);
-  --id-line-strong: rgba(0, 240, 255, 0.5);
+  --line: rgba(218, 219, 221, 0.12);
+  --line-soft: rgba(218, 219, 221, 0.06);
+  --line-strong: rgba(0, 216, 233, 0.35);
+  --id-line: rgba(218, 219, 221, 0.12);
+  --id-line-soft: rgba(218, 219, 221, 0.06);
+  --id-line-strong: rgba(218, 219, 221, 0.24);
 
-  /* accent — electric blue (Cyber Azure) */
-  --id-accent: #00F0FF; /* cyan electric */
-  --id-accent-deep: #00B8D4;
-  --id-accent-soft: rgba(0, 240, 255, 0.35);
-  --id-accent-faint: rgba(0, 240, 255, 0.12);
-  --id-accent-glow: 0 0 28px rgba(0, 240, 255, 0.5);
+  /* technical accents (reserved for system mind & active connections) */
+  --flare: #00D8E9;       /* Technical Cyan */
+  --flt: #087F72;         /* Deep Teal */
+  --mint: #80E0B4;        /* Mint Status */
+  --id-accent: #00D8E9;
+  --id-accent-deep: #087F72;
+  --id-accent-mint: #80E0B4;
+  --id-accent-soft: rgba(0, 216, 233, 0.25);
+  --id-accent-faint: rgba(0, 216, 233, 0.08);
+  --id-accent-glow: 0 0 24px rgba(0, 216, 233, 0.35);
 
-  /* graphite — supporting surfaces, technical labels */
-  --id-graphite: #8B949E;
+  /* animation ease */
+  --ease-aonnoy: cubic-bezier(.2, .7, .2, 1);
+
+  /* graphite surface token */
+  --id-graphite: #17191D;
+  --id-silver: #DADBDD;
+  --id-ivory: #F5F5F2;
 
   /* ---- typography ---- */
-  --id-font-hero: 'Syne', 'Space Grotesk', system-ui, sans-serif;
-  --id-font-display: 'Space Grotesk', system-ui, sans-serif;
-  --id-font-body: 'Inter', system-ui, sans-serif;
-  --id-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --id-font-hero: 'Space Grotesk', -apple-system, sans-serif;
+  --id-font-display: 'Space Grotesk', -apple-system, sans-serif;
+  --id-font-body: 'Inter', -apple-system, sans-serif;
+  --id-font-mono: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
 
   /* ---- type scale ---- */
   --id-text-display-size: clamp(3.6rem, 13vw, 7.5rem);

@@ -8,9 +8,15 @@
 .contact {
   position: relative;
   padding-block: calc(var(--section-gap) * 1.5) calc(var(--section-gap) * 1.2);
-  border-top: 1px solid var(--line-soft);
+  border-top: 1px solid var(--id-line-soft);
   overflow: clip;
   isolation: isolate;
+  background-color: var(--id-bg-1); /* Tactile Graphite ground */
+  background-image:
+    linear-gradient(to right, rgba(218, 219, 221, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(218, 219, 221, 0.02) 1px, transparent 1px);
+  background-size: 72px 72px;
+  background-position: center center;
 }
 
 /* ---- Particle convergence canvas (mirrors hero opening) ---- */
