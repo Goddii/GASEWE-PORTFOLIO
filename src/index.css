@@ -1,4 +1,5 @@
 @import "./styles/flow.css";
+@import "./styles/mobile.css";
 
 @tailwind base;
 @tailwind components;

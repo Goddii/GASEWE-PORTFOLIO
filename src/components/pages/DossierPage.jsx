@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { profileData } from '../../data/portfolioData';
 
 /**
@@ -10,6 +10,7 @@ import { profileData } from '../../data/portfolioData';
  */
 export default function DossierPage({ onNavigate }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const prefersReducedMotion = useReducedMotion();
 
   // Filter skills based on selected category
   const activeCategoryObj = profileData.stackCategories.find(
@@ -23,7 +24,7 @@ export default function DossierPage({ onNavigate }) {
       : activeCategoryObj?.skills || [];
 
   return (
-    <div className="space-y-12 w-full">
+    <div className="space-y-8 sm:space-y-12 w-full">
       {/* Physical Sheet Header Stamping */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/[0.08] font-mono text-[11px] text-slate-400">
         <div className="flex items-center gap-2.5">
@@ -83,7 +84,7 @@ export default function DossierPage({ onNavigate }) {
             <button
               type="button"
               onClick={() => onNavigate('casefiles')}
-              className="px-6 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-mono text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-150 flex items-center gap-2.5 shadow-[0_0_25px_rgba(0,240,255,0.3)] cursor-pointer"
+              className="min-h-11 px-6 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-mono text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-150 flex items-center gap-2.5 shadow-[0_0_25px_rgba(0,240,255,0.3)] cursor-pointer"
             >
               <span>Pull Out 02 Case Files</span>
               <span aria-hidden="true">→</span>
@@ -92,7 +93,7 @@ export default function DossierPage({ onNavigate }) {
             <button
               type="button"
               onClick={() => onNavigate('credentials')}
-              className="px-6 py-3 rounded-lg bg-slate-800/90 hover:bg-slate-700/90 border border-white/10 hover:border-cyan-400/40 text-slate-200 font-mono text-xs sm:text-sm font-medium tracking-wider uppercase transition-all duration-150 flex items-center gap-2.5 cursor-pointer"
+              className="min-h-11 px-6 py-3 rounded-lg bg-slate-800/90 hover:bg-slate-700/90 border border-white/10 hover:border-cyan-400/40 text-slate-200 font-mono text-xs sm:text-sm font-medium tracking-wider uppercase transition-all duration-150 flex items-center gap-2.5 cursor-pointer"
             >
               <span>Inspect 03 Credentials</span>
               <span aria-hidden="true">↗</span>
@@ -139,7 +140,7 @@ export default function DossierPage({ onNavigate }) {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3.5 py-1.5 rounded-md text-xs font-mono tracking-wider transition-all duration-150 cursor-pointer ${
+                  className={`min-h-11 px-3.5 py-1.5 rounded-md text-xs font-mono tracking-wider transition-all duration-150 cursor-pointer ${
                     isSelected
                       ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 font-medium shadow-[0_0_12px_rgba(0,240,255,0.15)]'
                       : 'text-slate-400 hover:text-slate-200 border border-transparent'
@@ -157,9 +158,12 @@ export default function DossierPage({ onNavigate }) {
           {displayedSkills.map((skill, index) => (
             <motion.span
               key={`${skill}-${index}`}
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.2, delay: index * 0.02 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.18,
+                delay: prefersReducedMotion ? 0 : index * 0.01,
+              }}
               className="px-3.5 py-2 rounded-lg bg-[#161c24] border border-white/[0.08] hover:border-cyan-400/50 text-xs font-mono text-slate-200 flex items-center gap-2 group transition-colors shadow-sm"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/60 group-hover:bg-cyan-400 shadow-[0_0_6px_#00f0ff]" />

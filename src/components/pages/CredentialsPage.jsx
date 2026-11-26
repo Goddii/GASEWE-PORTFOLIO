@@ -48,7 +48,7 @@ export default function CredentialsPage() {
           <button
             type="button"
             onClick={handlePrint}
-            className="px-3.5 py-2 rounded-md bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition-all flex items-center gap-1.5"
+            className="min-h-11 px-3.5 py-2 rounded-md bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition-all flex items-center gap-1.5"
             title="Print Credentials Sheet"
           >
             <span>Print Sheet</span>
@@ -58,7 +58,7 @@ export default function CredentialsPage() {
           <a
             href={profileData.cvPath}
             download
-            className="px-4 py-2 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-mono text-xs font-semibold tracking-wider uppercase transition-all duration-150 flex items-center gap-2 shadow-[0_0_15px_rgba(0,240,255,0.25)]"
+            className="min-h-11 px-4 py-2 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-mono text-xs font-semibold tracking-wider uppercase transition-all duration-150 flex items-center gap-2 shadow-[0_0_15px_rgba(0,240,255,0.25)]"
           >
             <span>Download CV (PDF)</span>
             <span aria-hidden="true">↓</span>

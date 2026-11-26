@@ -35,6 +35,24 @@ export default function DossierStage({ onReplayIntro }) {
     setActiveTab(tabKey);
   };
 
+  const handleTabKeyDown = (event) => {
+    if (isTransitioning) return;
+
+    const currentIndex = chapters.findIndex((chapter) => chapter.key === activeTab);
+    let nextIndex = currentIndex;
+
+    if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % chapters.length;
+    else if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + chapters.length) % chapters.length;
+    else if (event.key === 'Home') nextIndex = 0;
+    else if (event.key === 'End') nextIndex = chapters.length - 1;
+    else return;
+
+    event.preventDefault();
+    const nextChapter = chapters[nextIndex];
+    event.currentTarget.querySelector(`#chapter-tab-${nextChapter.key}`)?.focus();
+    handleSelectTab(nextChapter.key);
+  };
+
   // Physical Page Motion Variants (Tucking into & Pulling out of the dossier sleeve)
   const pageVariants = prefersReducedMotion
     ? {
@@ -109,7 +127,7 @@ export default function DossierStage({ onReplayIntro }) {
             <button
               type="button"
               onClick={() => handleSelectTab('dossier')}
-              className="text-left group cursor-pointer"
+              className="text-left group cursor-pointer min-h-11"
             >
               <div className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 group-hover:scale-125 transition-transform duration-200 shadow-[0_0_8px_#00f0ff]" />
@@ -129,7 +147,7 @@ export default function DossierStage({ onReplayIntro }) {
             <button
               type="button"
               onClick={onReplayIntro}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-slate-400 hover:text-cyan-300 hover:border-cyan-400/40 border border-white/10 rounded transition-all duration-150 cursor-pointer bg-white/[0.02]"
+            className="flex min-h-11 items-center gap-1.5 px-3 text-xs font-mono text-slate-400 hover:text-cyan-300 hover:border-cyan-400/40 border border-white/10 rounded transition-all duration-150 cursor-pointer bg-white/[0.02]"
               title="Replay folder opening intro sequence"
             >
               <span>↺</span>
@@ -139,7 +157,7 @@ export default function DossierStage({ onReplayIntro }) {
             <a
               href={profileData.cvPath}
               download
-              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono text-slate-200 bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40 hover:border-cyan-400/70 rounded transition-all duration-150 shadow-[0_0_12px_rgba(0,240,255,0.2)]"
+              className="flex min-h-11 items-center gap-1.5 px-3.5 text-xs font-mono text-slate-200 bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/40 hover:border-cyan-400/70 rounded transition-all duration-150 shadow-[0_0_12px_rgba(0,240,255,0.2)]"
             >
               <span>Download CV</span>
               <span className="text-cyan-400">↓</span>
@@ -151,22 +169,30 @@ export default function DossierStage({ onReplayIntro }) {
       {/* ============================================================
           EXPANSIVE DOSSIER CHASSIS & DOCUMENT CHAMBER
           ============================================================ */}
-      <main className="relative z-10 max-w-[1720px] w-full mx-auto px-3 sm:px-6 md:px-8 lg:px-12 py-5 sm:py-8 flex-1 flex flex-col justify-start">
+      <main className="relative z-10 max-w-[1720px] w-full mx-auto px-2 sm:px-6 md:px-8 lg:px-12 py-5 sm:py-8 flex-1 flex flex-col justify-start">
         
         {/* DOSSIER FOLDER HOUSING */}
         <div className="w-full relative flex flex-col">
           
           {/* PHYSICAL DOSSIER INDEX TABS (Folder Top) */}
-          <div className="flex items-end space-x-1.5 sm:space-x-3 overflow-x-auto no-scrollbar pt-2 px-1 sm:px-3 z-20">
+          <div
+            role="tablist"
+            aria-label="Portfolio chapters"
+            aria-orientation="horizontal"
+            onKeyDown={handleTabKeyDown}
+            className="dossier-tabs flex items-end space-x-1.5 sm:space-x-3 overflow-x-auto no-scrollbar pt-2 px-1 sm:px-3 z-20"
+          >
             {chapters.map((ch) => {
               const isActive = activeTab === ch.key;
               return (
                 <button
                   key={ch.key}
+                  id={`chapter-tab-${ch.key}`}
                   type="button"
                   onClick={() => handleSelectTab(ch.key)}
-                  disabled={isTransitioning}
-                  className={`group relative px-4 sm:px-6 py-3 rounded-t-xl font-mono text-xs sm:text-sm tracking-wider uppercase transition-all duration-150 whitespace-nowrap cursor-pointer select-none border-t border-l border-r ${
+                  tabIndex={isActive ? 0 : -1}
+                  aria-controls="chapter-page"
+                  className={`group relative min-h-11 px-4 sm:px-6 py-3 snap-start rounded-t-xl font-mono text-xs sm:text-sm tracking-wider uppercase transition-all duration-150 whitespace-nowrap cursor-pointer select-none border-t border-l border-r ${
                     isActive
                       ? 'bg-[#14181f] text-cyan-300 border-white/[0.15] z-30 shadow-[0_-6px_18px_rgba(0,0,0,0.65)] -mb-[1px] font-semibold'
                       : 'bg-[#0f1217]/95 text-slate-400 hover:text-slate-200 border-white/[0.06] hover:bg-[#12161d] z-10'
@@ -199,7 +225,7 @@ export default function DossierStage({ onReplayIntro }) {
           </div>
 
           {/* PHYSICAL DOSSIER CHAMBER & FULL-WIDTH ACTIVE SHEET */}
-          <div className="relative w-full rounded-b-2xl rounded-tr-2xl bg-[#0f1318]/96 border border-white/[0.12] shadow-[0_30px_90px_rgba(0,0,0,0.95)] p-3 sm:p-5 md:p-7 overflow-hidden min-h-[640px]">
+          <div className="relative w-full rounded-b-2xl rounded-tr-2xl bg-[#0f1318]/96 border border-white/[0.12] shadow-[0_30px_90px_rgba(0,0,0,0.95)] p-2 sm:p-5 md:p-7 overflow-hidden min-h-[640px]">
             
             {/* Dossier Interior Technical Graphic Accents */}
             <div className="absolute top-3.5 right-6 font-mono text-[9px] text-slate-600 tracking-widest uppercase pointer-events-none select-none hidden sm:block">
@@ -216,12 +242,16 @@ export default function DossierStage({ onReplayIntro }) {
                 onExitComplete={() => setIsTransitioning(false)}
               >
                 <motion.div
+                  id="chapter-page"
+                  role="tabpanel"
+                  tabIndex={0}
+                  aria-labelledby={`chapter-tab-${activeTab}`}
                   key={activeTab}
                   variants={pageVariants}
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  className="w-full rounded-xl bg-[#14181f]/98 border border-white/[0.1] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.85)] p-6 sm:p-10 lg:p-12 relative overflow-hidden"
+                  className="w-full rounded-xl bg-[#14181f]/98 border border-white/[0.1] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.85)] p-4 sm:p-10 lg:p-12 relative overflow-hidden"
                   style={{
                     backgroundImage:
                       'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%)',
